@@ -1,0 +1,12 @@
+version: '3.6'
+
+services:
+  rentalapi:
+    ports:
+      - '8091:8000'
+    volumes:
+      - ./rentalapi:/rentalapi
+    environment:
+      - FLASK_APP=app
+      - FLASK_ENV=development
+    command: ['flask', 'run', '--host=0.0.0.0', '--port=8000']
