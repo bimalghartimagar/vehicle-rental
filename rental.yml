@@ -3,6 +3,11 @@ version: '3.6'
 services:
   rentalapi:
     build: ./rentalapi
+    depends_on:
+      - rentalpgdb
     expose:
       - "8000"
     command: ['gunicorn', '-w', '4', '-b', '0.0.0.0:8000', 'app:create_app()']
+
+  rentalpgdb:
+    image: postgres:alpine

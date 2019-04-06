@@ -1,11 +1,13 @@
 FROM python:alpine
 
+RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev
+
 RUN mkdir /rentalapi/ 
 
 WORKDIR /rentalapi/
 
-ADD requirements.txt /rentalapi/
+ADD requirements.txt .
 
-RUN pip install -r /rentalapi/requirements.txt
+RUN pip install -r requirements.txt
 
-ADD . /rentalapi/
+COPY . .

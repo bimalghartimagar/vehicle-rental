@@ -6,7 +6,15 @@ services:
       - '8091:8000'
     volumes:
       - ./rentalapi:/rentalapi
-    environment:
-      - FLASK_APP=app
-      - FLASK_ENV=development
+    env_file: conf/dev.env
     command: ['flask', 'run', '--host=0.0.0.0', '--port=8000']
+
+  rentalpgdb:
+    env_file: conf/dev.env
+    ports:
+      - '5433:5432'
+    volumes:
+      - rentaldb_volume:/var/lib/postgresql
+
+volumes:
+  rentaldb_volume:
