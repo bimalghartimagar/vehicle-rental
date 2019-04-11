@@ -6,6 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 from .dao.models import db, Vendors, Vehicles, Users, UserTypes
 from . import config
 
+from rentalapi.schema import ma
+from rentalapi.api import api_bp
+
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -17,6 +20,10 @@ def create_app():
 
     db.init_app(app)
     db.create_all()
+
+    ma.init_app(app)
+
+    app.register_blueprint(api_bp)
 
     if app.config['ENV'] == 'development':
         from .dummy_data import insert_dummy_data

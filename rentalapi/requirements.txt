@@ -2,3 +2,6 @@ Flask
 gunicorn
 psycopg2
 Flask-SQLAlchemy
+flask-restful
+flask-marshmallow
+marshmallow-sqlalchemy
