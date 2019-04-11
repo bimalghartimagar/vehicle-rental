@@ -7,7 +7,7 @@ vendor_schema = VendorSchema()
 vendors_schema = VendorSchema(many=True)
 
 
-class Vendor(Resource):
+class VendorAPI(Resource):
     def get(self):
         vendors = Vendors.query.all()
 
