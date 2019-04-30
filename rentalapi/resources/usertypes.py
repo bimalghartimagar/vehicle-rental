@@ -6,9 +6,17 @@ from rentalapi.dao.models import UserTypes as UserTypesModel
 from rentalapi.dao.models import db
 
 user_type_schema = UserTypeSchema()
+user_types_schema = UserTypeSchema(many=True)
 
 
 class UserTypesAPI(Resource):
+    def get(self):
+        user_types = UserTypesModel.query.all()
+
+        return user_types_schema.dump(user_types).data
+
+
+class UserTypeAPI(Resource):
     def get(self, user_type_id):
         user_type = UserTypesModel.query.filter_by(id=user_type_id).first()
 
