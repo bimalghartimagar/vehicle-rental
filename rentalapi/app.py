@@ -1,6 +1,7 @@
 import os
+import json
 
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
 from .dao.models import db, Vendors, Vehicles, Users, UserTypes
@@ -38,7 +39,12 @@ def create_app():
 
     @app.route('/')
     def home():
-        return 'Welcome to Vehicle Rental API.'
+        return json.dumps(
+                    {
+                        "message": "Welcome to Vehicle Rental API.",
+                        "url": "{}api/".format(request.base_url)
+                    }
+                )
 
     return app
 
