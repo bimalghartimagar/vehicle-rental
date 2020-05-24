@@ -12,7 +12,7 @@ class RentalsAPI(Resource):
     def get(self):
         rentals = Rentals.query.all()
 
-        return rentals_schema.dump(rentals).data
+        return rentals_schema.dump(rentals)
 
 
 class RentalAPI(Resource):
@@ -24,7 +24,7 @@ class RentalAPI(Resource):
                 404,
                 message="rental id {} doesn't exist".format(rental_id))
 
-        return rental_schema.dump(rental).data
+        return rental_schema.dump(rental)
 
     def post(self):
         data = request.get_json()
@@ -40,7 +40,7 @@ class RentalAPI(Resource):
         except:
             db.sessoion.rollback()
 
-        return rental_schema.dump(rental).data
+        return rental_schema.dump(rental)
 
     def put(self, rental_id):
         rental = Rentals.query.get(rental_id)
@@ -63,7 +63,7 @@ class RentalAPI(Resource):
         except:
             db.session.rollback()
 
-        return rental_schema.dump(rental).data
+        return rental_schema.dump(rental)
 
     def delete(self, rental_ud):
         rental = Rentals.query.get(rental_id)
@@ -80,4 +80,4 @@ class RentalAPI(Resource):
         except:
             db.session.rollback()
 
-        return rental_schema.dump(rental).data
+        return rental_schema.dump(rental)

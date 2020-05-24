@@ -12,7 +12,7 @@ class UsersAPI(Resource):
     def get(self):
         users = Users.query.all()
 
-        return users_schema.dump(users).data
+        return users_schema.dump(users)
 
 
 class UserAPI(Resource):
@@ -24,7 +24,7 @@ class UserAPI(Resource):
                 404,
                 message="user id {} doesn't exist".format(user_id))
 
-        return user_schema.dump(user).data
+        return user_schema.dump(user)
 
     def post(self):
         data = request.get_json()
@@ -40,7 +40,7 @@ class UserAPI(Resource):
         except:
             db.sessoion.rollback()
 
-        return user_schema.dump(user).data
+        return user_schema.dump(user)
 
     def put(self, user_id):
         user = Users.query.get(user_id)
@@ -63,7 +63,7 @@ class UserAPI(Resource):
         except:
             db.session.rollback()
 
-        return user_schema.dump(user).data
+        return user_schema.dump(user)
 
     def delete(self, user_ud):
         user = Users.query.get(user_id)
@@ -80,4 +80,4 @@ class UserAPI(Resource):
         except:
             db.session.rollback()
 
-        return user_schema.dump(user).data
+        return user_schema.dump(user)

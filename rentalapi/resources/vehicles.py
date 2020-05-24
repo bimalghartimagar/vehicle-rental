@@ -12,7 +12,7 @@ class VehiclesAPI(Resource):
     def get(self):
         vehicles = Vehicles.query.all()
 
-        return vehicles_schema.dump(vehicles).data
+        return vehicles_schema.dump(vehicles)
 
 
 class VehicleAPI(Resource):
@@ -24,7 +24,7 @@ class VehicleAPI(Resource):
                 404,
                 message="vehicle id {} doesn't exist".format(vehicle_id))
 
-        return vehicle_schema.dump(vehicle).data
+        return vehicle_schema.dump(vehicle)
 
     def post(self):
         data = request.get_json()
@@ -40,7 +40,7 @@ class VehicleAPI(Resource):
         except:
             db.sessoion.rollback()
 
-        return vehicle_schema.dump(vehicle).data
+        return vehicle_schema.dump(vehicle)
 
     def put(self, vehicle_id):
         vehicle = Vehicles.query.get(vehicle_id)
@@ -63,7 +63,7 @@ class VehicleAPI(Resource):
         except:
             db.session.rollback()
 
-        return vehicle_schema.dump(vehicle).data
+        return vehicle_schema.dump(vehicle)
 
     def delete(self, vehicle_ud):
         vehicle = Vehicles.query.get(vehicle_id)
@@ -80,4 +80,4 @@ class VehicleAPI(Resource):
         except:
             db.session.rollback()
 
-        return vehicle_schema.dump(vehicle).data
+        return vehicle_schema.dump(vehicle)

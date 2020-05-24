@@ -13,7 +13,7 @@ class UserTypesAPI(Resource):
     def get(self):
         user_types = UserTypesModel.query.all()
 
-        return user_types_schema.dump(user_types).data
+        return user_types_schema.dump(user_types)
 
 
 class UserTypeAPI(Resource):
@@ -26,7 +26,7 @@ class UserTypeAPI(Resource):
                 message="User Type id {} doesn't exist".format(user_type_id)
                 )
 
-        return user_type_schema.dump(user_type).data
+        return user_type_schema.dump(user_type)
 
     def post(self):
         data = request.get_json()
@@ -41,7 +41,7 @@ class UserTypeAPI(Resource):
         except:
             db.session.rollback()
 
-        return user_type_schema.dump(user_type).data
+        return user_type_schema.dump(user_type)
 
     def put(self, user_type_id):
 
@@ -66,7 +66,7 @@ class UserTypeAPI(Resource):
         except:
             db.session.rollback()
 
-        return user_type_schema.dump(user_type).data
+        return user_type_schema.dump(user_type)
 
     def delete(self, user_type_id):
         user_type = UserTypesModel.query.get(user_type_id)
@@ -83,4 +83,4 @@ class UserTypeAPI(Resource):
         except:
             db.session.rollback()
 
-        return user_type_schema.dump(user_type).data
+        return user_type_schema.dump(user_type)

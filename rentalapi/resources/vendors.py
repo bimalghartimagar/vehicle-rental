@@ -12,7 +12,7 @@ class VendorsAPI(Resource):
     def get(self):
         vendors = Vendors.query.all()
 
-        return vendors_schema.dump(vendors).data
+        return vendors_schema.dump(vendors)
 
 
 class VendorAPI(Resource):
@@ -24,7 +24,7 @@ class VendorAPI(Resource):
                 404,
                 message="Vendor id {} doesn't exist".format(vendor_id))
 
-        return vendor_schema.dump(vendor).data
+        return vendor_schema.dump(vendor)
 
     def post(self):
         data = request.get_json()
@@ -40,7 +40,7 @@ class VendorAPI(Resource):
         except:
             db.sessoion.rollback()
 
-        return vendor_schema.dump(vendor).data
+        return vendor_schema.dump(vendor)
 
     def put(self, vendor_id):
         vendor = Vendors.query.get(vendor_id)
@@ -63,7 +63,7 @@ class VendorAPI(Resource):
         except:
             db.session.rollback()
 
-        return vendor_schema.dump(vendor).data
+        return vendor_schema.dump(vendor)
 
     def delete(self, vendor_ud):
         vendor = Vendors.query.get(vendor_id)
@@ -80,4 +80,4 @@ class VendorAPI(Resource):
         except:
             db.session.rollback()
 
-        return vendor_schema.dump(vendor).data
+        return vendor_schema.dump(vendor)

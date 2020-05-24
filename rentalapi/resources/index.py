@@ -7,4 +7,4 @@ index_schema = IndexSchema()
 class IndexAPI(Resource):
     def get(self):
 
-        return index_schema.dump({}).data
+        return index_schema.dump({})

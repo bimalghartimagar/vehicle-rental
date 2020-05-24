@@ -5,7 +5,7 @@ from rentalapi.dao.models import Vendors, UserTypes, Vehicles, Users, Rentals
 ma = Marshmallow()
 
 
-class IndexSchema(ma.ModelSchema):
+class IndexSchema(ma.SQLAlchemyAutoSchema):
     vendors = ma.URLFor('api.vendorsapi', _external=True)
     vehicles = ma.URLFor('api.vehiclesapi', _external=True)
     users = ma.URLFor('api.usersapi', _external=True)
@@ -13,7 +13,7 @@ class IndexSchema(ma.ModelSchema):
     rentals = ma.URLFor('api.rentalsapi', _external=True)
 
 
-class VendorSchema(ma.ModelSchema):
+class VendorSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Vendors
 
@@ -25,7 +25,7 @@ class VendorSchema(ma.ModelSchema):
                         )
 
 
-class UserTypeSchema(ma.ModelSchema):
+class UserTypeSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = UserTypes
 
@@ -37,7 +37,7 @@ class UserTypeSchema(ma.ModelSchema):
                     )
 
 
-class VehicleSchema(ma.ModelSchema):
+class VehicleSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Vehicles
 
@@ -48,7 +48,7 @@ class VehicleSchema(ma.ModelSchema):
                 )
 
 
-class UserSchema(ma.ModelSchema):
+class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Users
 
@@ -59,6 +59,6 @@ class UserSchema(ma.ModelSchema):
                 )
 
 
-class RentalSchema(ma.ModelSchema):
+class RentalSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Rentals
