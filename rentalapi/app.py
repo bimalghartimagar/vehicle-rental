@@ -3,6 +3,7 @@ import json
 
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 from .dao.models import db, Vendors, Vehicles, Users, UserTypes
 from . import config
@@ -26,9 +27,12 @@ def create_app():
 
     app.register_blueprint(api_bp)
 
+    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
     if app.config['ENV'] == 'development':
         from .dummy_data import insert_dummy_data
         app.cli.add_command(insert_dummy_data)
+        # insert_dummy_data()
 
     try:
         os.makedirs(app.instance_path, exist_ok=True)

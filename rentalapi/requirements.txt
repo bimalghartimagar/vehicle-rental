@@ -5,3 +5,5 @@ Flask-SQLAlchemy
 flask-restful
 flask-marshmallow
 marshmallow-sqlalchemy
+flask-security
+flask-cors
