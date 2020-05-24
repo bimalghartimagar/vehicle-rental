@@ -14,7 +14,7 @@
       <v-btn to="/contactus" text>
         <span class="mr-2">Contact Us</span>
       </v-btn>
-      <v-btn text>
+      <v-btn to="/vehicles" text>
         <span class="mr-2">Vehicles</span>
       </v-btn>
       <v-btn text>
