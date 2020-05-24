@@ -11,3 +11,9 @@ services:
 
   rentalpgdb:
     image: postgres:alpine
+
+  rentalapp:
+    build: ./rentalapp
+    expose:
+      - "3000"
+    command: ['yarn', 'serve']
