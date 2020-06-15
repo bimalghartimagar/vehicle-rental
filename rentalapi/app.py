@@ -32,7 +32,6 @@ def create_app():
     if app.config['ENV'] == 'development':
         from .dummy_data import insert_dummy_data
         app.cli.add_command(insert_dummy_data)
-        # insert_dummy_data()
 
     try:
         os.makedirs(app.instance_path, exist_ok=True)
@@ -51,6 +50,7 @@ def create_app():
                 )
 
     return app
+
 
 if __name__ == '__main__':
     create_app().run()

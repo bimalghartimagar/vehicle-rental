@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
+  <v-app color="red">
+    <v-app-bar app color="primary" flat dark>
       <div class="d-flex align-center display-1">Vehicle Rental</div>
 
       <v-spacer></v-spacer>

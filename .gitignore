@@ -7,3 +7,7 @@ instance/
 screenshots/
 
 .vscode/
+
+*/node_modules/*
+
+*.env
