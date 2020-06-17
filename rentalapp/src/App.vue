@@ -20,7 +20,7 @@
       <v-btn text>
         <span class="mr-2">Vendors</span>
       </v-btn>
-      <v-btn text>
+      <v-btn to="/usertypes" text>
         <span class="mr-2">User Types</span>
       </v-btn>
       <v-btn text>
