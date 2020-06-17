@@ -5,7 +5,7 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
-from .dao.models import db, Vendors, Vehicles, Users, UserTypes
+from .dao.models import db, migrate, Vendors, Vehicles, Users, UserTypes
 from . import config
 
 from rentalapi.schema import ma
@@ -21,13 +21,25 @@ def create_app():
     app.app_context().push()
 
     db.init_app(app)
+    migrate.init_app(app, db)
     db.create_all()
 
     ma.init_app(app)
 
     app.register_blueprint(api_bp)
-
+    
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+    @app.after_request
+    def after_request(response):
+        app.logger.debug("I am here")
+        app.logger.debug(response.headers)
+        app.logger.debug(dir(response))
+        # response.headers.add('Access-Control-Allow-Origin', '*')
+        # response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        # response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+        # response.headers.add('Access-Control-Allow-Credentials', 'true')
+        return app.response_class(response=response.data, status=200)
 
     if app.config['ENV'] == 'development':
         from .dummy_data import insert_dummy_data

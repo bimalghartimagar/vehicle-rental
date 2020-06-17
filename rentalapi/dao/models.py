@@ -1,8 +1,10 @@
 from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 class TimeStampMixin(object):
@@ -30,6 +32,7 @@ class Vehicles(db.Model, TimeStampMixin):
     type = db.Column(db.String(5), nullable=False)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendors.id'),
                           nullable=False)
+    img_url = db.Column(db.String, nullable=True)
 
     def __repr__(self):
         return '<Vehicle id %r with name %r>' % self.id, self.name
@@ -75,6 +78,6 @@ class Users(db.Model, TimeStampMixin):
     type_id = db.Column(db.Integer, db.ForeignKey('user_types.id'),
                         nullable=False)
     rate = db.Column(db.Float, nullable=False, server_default=str(0.0))
-
+    img_url = db.Column(db.String, nullable=True)
     def __repr__(self):
         return '<User %r>' % self.username

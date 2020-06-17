@@ -15,6 +15,26 @@ class UserTypesAPI(Resource):
 
         return user_types_schema.dump(user_types)
 
+    def post(self):
+        current_app.logger.debug("IN POst")
+        data = request.get_json()
+        current_app.logger.debug(data)
+        current_app.logger.debug(dir(user_type_schema))
+        current_app.logger.debug(user_type_schema.fields)
+        # user_type, errors = user_type_schema.load(data)
+        user_type = UserTypesModel(name=data["name"])
+        errors = None
+        if errors:
+            abort(422, message=errors)
+
+        try:
+            db.session.add(user_type)
+            db.session.commit()
+        except:
+            db.session.rollback()
+
+        return user_type_schema.dump(user_type)
+
 
 class UserTypeAPI(Resource):
     def get(self, user_type_id):
@@ -25,21 +45,6 @@ class UserTypeAPI(Resource):
                 404,
                 message="User Type id {} doesn't exist".format(user_type_id)
                 )
-
-        return user_type_schema.dump(user_type)
-
-    def post(self):
-        data = request.get_json()
-        user_type, errors = user_type_schema.load(data)
-
-        if errors:
-            abort(422, message=errors)
-
-        try:
-            db.session.add(user_type)
-            db.session.commit()
-        except:
-            db.session.rollback()
 
         return user_type_schema.dump(user_type)
 
