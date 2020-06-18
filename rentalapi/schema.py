@@ -1,4 +1,5 @@
 from flask_marshmallow import Marshmallow
+from marshmallow import post_load
 
 from rentalapi.dao.models import Vendors, UserTypes, Vehicles, Users, Rentals
 
@@ -35,6 +36,9 @@ class UserTypeSchema(ma.SQLAlchemyAutoSchema):
                         'user_id',
                         external=True)
                     )
+    @post_load
+    def make_object(self, data, **kwargs):
+        return UserTypes(**data)
 
 
 class VehicleSchema(ma.SQLAlchemyAutoSchema):

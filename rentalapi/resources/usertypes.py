@@ -1,5 +1,6 @@
 from flask_restful import Resource, abort
 from flask import current_app, request
+from marshmallow import ValidationError
 
 from rentalapi.schema import UserTypeSchema
 from rentalapi.dao.models import UserTypes as UserTypesModel
@@ -16,21 +17,20 @@ class UserTypesAPI(Resource):
         return user_types_schema.dump(user_types)
 
     def post(self):
-        current_app.logger.debug("IN POst")
         data = request.get_json()
-        current_app.logger.debug(data)
-        current_app.logger.debug(dir(user_type_schema))
-        current_app.logger.debug(user_type_schema.fields)
-        # user_type, errors = user_type_schema.load(data)
-        user_type = UserTypesModel(name=data["name"])
-        errors = None
-        if errors:
-            abort(422, message=errors)
+
+        try:
+            user_type = user_type_schema.load(data)
+        except ValidationError as err:
+            current_app.logger.debug(err.messages)
+            current_app.logger.debug(err.valid_data)
+            abort(422, message=err.messages)
 
         try:
             db.session.add(user_type)
             db.session.commit()
-        except:
+        except Exception as err:
+            current_app.logger.debug(err)
             db.session.rollback()
 
         return user_type_schema.dump(user_type)
