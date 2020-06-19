@@ -6,7 +6,7 @@ Vue.use(Vuetify);
 export default new Vuetify({
   theme: {
     themes: {
-      light:  {
+      light: {
         primary: "#607d8b",
         secondary: "#ff9800",
         accent: "#9c27b0",
@@ -14,7 +14,7 @@ export default new Vuetify({
         warning: "#ffc107",
         info: "#2196f3",
         success: "#4caf50"
-        }
+      }
     }
-  },
+  }
 });

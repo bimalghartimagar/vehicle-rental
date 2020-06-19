@@ -59,10 +59,13 @@ class UserTypeAPI(Resource):
                 )
 
         data = request.get_json()
-        put_user_type, errors = user_type_schema.load(data)
 
-        if errors:
-            abort(422, message=errors)
+        try:
+            put_user_type = user_type_schema.load(data)
+        except ValidationError as err:
+            current_app.logger.debug(err.messages)
+            current_app.logger.debug(err.valid_data)
+            abort(422, message=err.messages)
 
         user_type.name = put_user_type.name
 

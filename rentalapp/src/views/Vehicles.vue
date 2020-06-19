@@ -1,7 +1,12 @@
 <template>
   <div class="d-flex pa-2 mt-4">
     <template v-for="vehicle in vehicleList">
-      <v-card class="mx-auto" max-width="400" :key="vehicle.id" :to="`vehicle/${vehicle.id}/`">
+      <v-card
+        class="mx-auto"
+        max-width="400"
+        :key="vehicle.id"
+        :to="`vehicle/${vehicle.id}/`"
+      >
         <v-img
           class="white--text align-end"
           height="200px"
@@ -10,7 +15,9 @@
           <v-card-title>{{ vehicle.name }}</v-card-title>
         </v-img>
 
-        <v-card-subtitle class="pb-0">Rate/day: Rs{{ vehicle.rate }}</v-card-subtitle>
+        <v-card-subtitle class="pb-0"
+          >Rate/day: Rs{{ vehicle.rate }}</v-card-subtitle
+        >
         <v-card-text class="text--primary">
           <div>Type: {{ vehicle.type }}</div>
 
@@ -37,5 +44,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
