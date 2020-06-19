@@ -17,7 +17,7 @@
       <v-btn to="/vehicles" text>
         <span class="mr-2">Vehicles</span>
       </v-btn>
-      <v-btn text>
+      <v-btn to="/vendors" text>
         <span class="mr-2">Vendors</span>
       </v-btn>
       <v-btn to="/usertypes" text>

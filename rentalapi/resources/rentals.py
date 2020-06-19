@@ -38,7 +38,7 @@ class RentalAPI(Resource):
             db.session.add(rental)
             db.session.commit()
         except:
-            db.sessoion.rollback()
+            db.session.rollback()
 
         return rental_schema.dump(rental)
 

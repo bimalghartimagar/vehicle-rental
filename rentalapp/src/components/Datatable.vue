@@ -63,7 +63,7 @@
 import rentalApi from "../api/rentalApi";
 
 export default {
-  props: ["headers", "items", "crudObject", "title", "crudUrl", "putUrl"],
+  props: ["headers", "items", "crudObject", "title", "postUrl", "putUrl"],
   data: () => ({
     dialog: false,
     editedIndex: -1,
@@ -139,7 +139,7 @@ export default {
           });
       } else {
         rentalApi
-          .post(this.crudUrl, this.editedItem)
+          .post(this.postUrl, this.editedItem)
           .then(response => {
             console.log(response);
             this.items.push(response.data);

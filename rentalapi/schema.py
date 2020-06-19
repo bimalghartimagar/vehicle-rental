@@ -24,6 +24,9 @@ class VendorSchema(ma.SQLAlchemyAutoSchema):
                             'vehicle_id',
                             True)
                         )
+    @post_load
+    def make_object(self, data, **kwargs):
+        return Vendors(**data)
 
 
 class UserTypeSchema(ma.SQLAlchemyAutoSchema):

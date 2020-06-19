@@ -38,7 +38,7 @@ class VehicleAPI(Resource):
             db.session.add(vehicle)
             db.session.commit()
         except:
-            db.sessoion.rollback()
+            db.session.rollback()
 
         return vehicle_schema.dump(vehicle)
 

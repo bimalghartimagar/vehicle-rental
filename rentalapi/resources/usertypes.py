@@ -71,7 +71,8 @@ class UserTypeAPI(Resource):
 
         try:
             db.session.commit()
-        except:
+        except Exception as err:
+            current_app.logger.debug(err)
             db.session.rollback()
 
         return user_type_schema.dump(user_type)

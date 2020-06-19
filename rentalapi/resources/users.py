@@ -38,7 +38,7 @@ class UserAPI(Resource):
             db.session.add(user)
             db.session.commit()
         except:
-            db.sessoion.rollback()
+            db.session.rollback()
 
         return user_schema.dump(user)
 
