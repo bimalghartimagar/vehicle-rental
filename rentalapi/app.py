@@ -4,13 +4,16 @@ import json
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from celery import Celery
 
 from .dao.models import db, migrate, Vendors, Vehicles, Users, UserTypes
 from . import config
 
 from rentalapi.schema import ma
 from rentalapi.api import api_bp
+from rentalapi.celery_util import init_celery
 
+from . import celery
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -19,6 +22,8 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     app.app_context().push()
+
+    init_celery(celery, app)
 
     db.init_app(app)
     migrate.init_app(app, db)

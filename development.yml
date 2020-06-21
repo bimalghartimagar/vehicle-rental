@@ -22,7 +22,15 @@ services:
     volumes:
       - ./rentalapp:/rentalapp
     command: ['yarn', 'serve']
-    
+
+  rentalredis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - rentalredis_volume:/data
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
 
 volumes:
   rentaldb_volume:
+  rentalredis_volume:

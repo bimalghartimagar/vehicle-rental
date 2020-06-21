@@ -8,3 +8,4 @@ marshmallow-sqlalchemy
 flask-security
 flask-cors
 flask-migrate
+celery[redis]

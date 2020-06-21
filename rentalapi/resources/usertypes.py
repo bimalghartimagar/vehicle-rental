@@ -1,3 +1,5 @@
+import random
+
 from flask_restful import Resource, abort
 from flask import current_app, request
 from marshmallow import ValidationError
@@ -5,7 +7,7 @@ from marshmallow import ValidationError
 from rentalapi.schema import UserTypeSchema
 from rentalapi.dao.models import UserTypes as UserTypesModel
 from rentalapi.dao.models import db
-
+from rentalapi.celery_tasks import add
 user_type_schema = UserTypeSchema()
 user_types_schema = UserTypeSchema(many=True)
 
@@ -13,7 +15,7 @@ user_types_schema = UserTypeSchema(many=True)
 class UserTypesAPI(Resource):
     def get(self):
         user_types = UserTypesModel.query.all()
-
+        add.delay(random.randint(0,1000), random.randint(0,1000))
         return user_types_schema.dump(user_types)
 
     def post(self):
