@@ -16,7 +16,7 @@ class TimeStampMixin(object):
 class Vendors(db.Model, TimeStampMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    vehicles = db.relationship('Vehicles', backref='vendor', lazy=True)
+    # vehicles = db.relationship('Vehicles', backref='vendor', lazy=True)
 
     def __repr__(self):
         return '<Vendor %r>' % self.name

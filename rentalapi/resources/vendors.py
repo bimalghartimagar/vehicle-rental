@@ -80,7 +80,7 @@ class VendorAPI(Resource):
         if not vendor:
             abort(
                 404,
-                message="Vendor id {} doesn't exist".format(vendor_ud)
+                message="Vendor id {} doesn't exist".format(vendor_id)
                 )
 
         try:

@@ -47,13 +47,13 @@ class UserTypeSchema(ma.SQLAlchemyAutoSchema):
 class VehicleSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Vehicles
+        include_fk = True
 
-    vendor = ma.HyperlinkRelated(
-                'api.vendorapi',
-                'vendor_id',
-                external=True
-                )
+    vendor = ma.Nested(VendorSchema, exclude = ('vehicles',))
 
+    @post_load
+    def make_object(self, data, **kwargs):
+        return Vehicles(**data)
 
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:

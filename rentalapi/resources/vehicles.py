@@ -1,8 +1,10 @@
-from flask_restful import Resource
-from flask import request
+from flask_restful import Resource, abort
+from flask import current_app, request
+from marshmallow import ValidationError
 
-from rentalapi.dao.models import Vehicles
+from rentalapi.dao.models import Vehicles, Vendors
 from rentalapi.schema import VehicleSchema
+from rentalapi.dao.models import db
 
 vehicle_schema = VehicleSchema()
 vehicles_schema = VehicleSchema(many=True)
@@ -13,6 +15,31 @@ class VehiclesAPI(Resource):
         vehicles = Vehicles.query.all()
 
         return vehicles_schema.dump(vehicles)
+    
+    def post(self):
+        data = request.get_json()
+        current_app.logger.debug('data')
+        current_app.logger.debug(data)
+
+        try:
+            # vendor = Vendors.query.get(data['vendor'])
+            # current_app.logger.debug('vendor fetched')
+            # current_app.logger.debug(vendor)
+            # data['vendor'] = vendor
+            vehicle = vehicle_schema.load(data)
+        except ValidationError as err:
+            current_app.logger.debug(err.messages)
+            current_app.logger.debug(err.valid_data)
+            abort(422, message=err.messages)
+
+        try:
+            db.session.add(vehicle)
+            db.session.commit()
+        except Exception as err:
+            current_app.logger.debug(err)
+            db.session.rollback()
+
+        return vehicle_schema.dump(vehicle)
 
 
 class VehicleAPI(Resource):
@@ -26,22 +53,6 @@ class VehicleAPI(Resource):
 
         return vehicle_schema.dump(vehicle)
 
-    def post(self):
-        data = request.get_json()
-
-        vehicle, errors = vehicle_schema.load(data)
-
-        if errors:
-            abort(422, message=errors)
-
-        try:
-            db.session.add(vehicle)
-            db.session.commit()
-        except:
-            db.session.rollback()
-
-        return vehicle_schema.dump(vehicle)
-
     def put(self, vehicle_id):
         vehicle = Vehicles.query.get(vehicle_id)
 
@@ -50,28 +61,38 @@ class VehicleAPI(Resource):
                 404,
                 message="vehicle id {} doesn't exist".format(vehicle_id))
         
-        data = request.json()
-        put_vehicle, errors = vehicle_schema.load(data)
+        data = request.get_json()
 
-        if errors:
-            abort(422, message=errors)
+        try:
+            put_vehicle = vehicle_schema.load(data)
+        except ValidationError as err:
+            current_app.logger.debug(err.messages)
+            current_app.logger.debug(err.valid_data)
+            abort(422, message=err.messages)
 
         vehicle.name = put_vehicle.name
+        vehicle.seats = put_vehicle.seats
+        vehicle.color = put_vehicle.color
+        vehicle.make_year = put_vehicle.make_year
+        vehicle.rate = put_vehicle.rate
+        vehicle.type = put_vehicle.type
+        vehicle.vendor_id = put_vehicle.vendor_id
 
         try:
             db.session.commit()
-        except:
+        except Exception as err:
+            current_app.logger.debug(err)
             db.session.rollback()
 
         return vehicle_schema.dump(vehicle)
 
-    def delete(self, vehicle_ud):
+    def delete(self, vehicle_id):
         vehicle = Vehicles.query.get(vehicle_id)
 
         if not vehicle:
             abort(
                 404,
-                message="vehicle id {} doesn't exist".format(vehicle_ud)
+                message="vehicle id {} doesn't exist".format(vehicle_id)
                 )
 
         try:

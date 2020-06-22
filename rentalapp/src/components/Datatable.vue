@@ -29,7 +29,16 @@
                       <v-text-field
                         v-model="editedItem[name]"
                         :label="getLabelName(name)"
+                        v-if="!hasList(name)"
                       ></v-text-field>
+                      <v-select
+                        v-if="hasList(name)"
+                        :items="hasList(name)"
+                        :label="getLabelName(name)"
+                        :item-text="'name'"
+                        :item-value="'id'"
+                        v-model="editedItem[name]"
+                      ></v-select>
                     </v-col>
                   </template>
                 </v-row>
@@ -45,13 +54,16 @@
         </v-dialog>
       </v-toolbar>
     </template>
+
+    <template
+      v-for="value in headersWithList"
+      v-slot:[getAttrName(value.value)]="{ item }"
+      >{{ getNameFromList(item, value.list) }}
+    </template>
+
     <template v-slot:item.actions="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">
-        mdi-pencil
-      </v-icon>
-      <v-icon small @click="deleteItem(item)">
-        mdi-delete
-      </v-icon>
+      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
       <v-btn text color="primary">No data.</v-btn>
@@ -79,6 +91,9 @@ export default {
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+    headersWithList: function() {
+      return this.headers.filter(x => Object.hasOwnProperty.call(x, "list"));
     }
   },
 
@@ -151,7 +166,24 @@ export default {
       this.close();
     },
     getLabelName(name) {
-      return this.headers.filter(x => x.value === name)[0].text;
+      let items = this.headers.filter(x => x.value === name);
+      if (items.length === 0) return;
+      return items[0].text;
+    },
+    hasList(name) {
+      let items = this.headers.filter(x => x.value === name);
+      if (items.length === 0) return false;
+      let item = items[0];
+      if (Object.prototype.hasOwnProperty.call(item, "list")) return item.list;
+      return false;
+    },
+    getNameFromList(item, list) {
+      let items = list.filter(x=>x.id === item.vendor_id);
+      if(items.length == 0) return
+      return items[0].name;
+    },
+    getAttrName(value) {
+      return 'item.'+value;
     }
   }
 };
