@@ -178,12 +178,12 @@ export default {
       return false;
     },
     getNameFromList(item, list) {
-      let items = list.filter(x=>x.id === item.vendor_id);
-      if(items.length == 0) return
+      let items = list.filter(x => x.id === item.vendor_id);
+      if (items.length == 0) return;
       return items[0].name;
     },
     getAttrName(value) {
-      return 'item.'+value;
+      return "item." + value;
     }
   }
 };
