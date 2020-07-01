@@ -3,6 +3,7 @@ import random
 from flask_restful import Resource, abort
 from flask import current_app, request
 from marshmallow import ValidationError
+from flask_jwt_extended import (jwt_required)
 
 from rentalapi.schema import UserTypeSchema
 from rentalapi.dao.models import UserTypes as UserTypesModel
@@ -11,8 +12,8 @@ from rentalapi.celery_tasks import add
 user_type_schema = UserTypeSchema()
 user_types_schema = UserTypeSchema(many=True)
 
-
 class UserTypesAPI(Resource):
+    @jwt_required
     def get(self):
         user_types = UserTypesModel.query.all()
         add.delay(random.randint(0,1000), random.randint(0,1000))

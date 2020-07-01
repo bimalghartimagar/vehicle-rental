@@ -1,6 +1,7 @@
 from flask_restful import Resource, abort
 from flask import current_app, request
 from marshmallow import ValidationError
+from flask_jwt_extended import (jwt_required)
 
 from rentalapi.dao.models import Vendors
 from rentalapi.schema import VendorSchema
@@ -9,8 +10,8 @@ from rentalapi.dao.models import db
 vendor_schema = VendorSchema()
 vendors_schema = VendorSchema(many=True)
 
-
 class VendorsAPI(Resource):
+    @jwt_required
     def get(self):
         vendors = Vendors.query.all()
 

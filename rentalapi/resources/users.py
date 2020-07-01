@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-
+from flask_jwt_extended import (jwt_required)
 from rentalapi.dao.models import Users
 from rentalapi.schema import UserSchema
 
@@ -9,6 +9,7 @@ users_schema = UserSchema(many=True)
 
 
 class UsersAPI(Resource):
+    @jwt_required
     def get(self):
         users = Users.query.all()
 
