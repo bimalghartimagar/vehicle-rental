@@ -4,7 +4,8 @@ from flask_jwt_extended import (
     jwt_refresh_token_required,
     create_access_token,
     create_refresh_token,
-    get_jwt_identity
+    get_jwt_identity,
+    get_raw_jwt
 )
 
 import datetime
@@ -14,6 +15,8 @@ from rentalapi.dao.models import Users, db
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 blacklist = set()
+
+token_expiry_minutes = 1
 
 @jwt.token_in_blacklist_loader
 def is_token_blacklist(decrypted_token):
@@ -38,7 +41,7 @@ def login():
   if not authorized:
     return jsonify({'msg': 'Invalid credentials.'}), 401
 
-  expires = datetime.timedelta(minutes=15)
+  expires = datetime.timedelta(minutes=token_expiry_minutes)
 
   access_token = create_access_token(identity=username, expires_delta=expires, fresh=True)
   refresh_token = create_refresh_token(identity=username)
@@ -67,8 +70,9 @@ def signup():
 @jwt_refresh_token_required
 def refresh():
   current_user = get_jwt_identity()
+  expires = datetime.timedelta(minutes=token_expiry_minutes)
   return jsonify({
-    'access_token': create_access_token(identity=current_user, fresh=False)
+    'access_token': create_access_token(identity=current_user, expires_delta=expires, fresh=False)
   })
   pass
 
