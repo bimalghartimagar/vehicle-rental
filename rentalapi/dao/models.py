@@ -2,6 +2,7 @@ from datetime import datetime
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -71,13 +72,20 @@ class Rentals(db.Model, TimeStampMixin):
 
 class Users(db.Model, TimeStampMixin):
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(30), nullable=False)
-    last_name = db.Column(db.String(30), nullable=False)
+    first_name = db.Column(db.String(30), nullable=True)
+    last_name = db.Column(db.String(30), nullable=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     type_id = db.Column(db.Integer, db.ForeignKey('user_types.id'),
                         nullable=False)
-    rate = db.Column(db.Float, nullable=False, server_default=str(0.0))
+    rate = db.Column(db.Float, nullable=True, server_default=str(0.0))
     img_url = db.Column(db.String, nullable=True)
     def __repr__(self):
         return '<User %r>' % self.username
+
+    def hash_password(self):
+        self.password = generate_password_hash(self.password).decode('utf8')
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)

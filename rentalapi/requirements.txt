@@ -5,7 +5,8 @@ Flask-SQLAlchemy
 flask-restful
 flask-marshmallow
 marshmallow-sqlalchemy
-flask-security
+flask-jwt-extended
+flask-bcrypt
 flask-cors
 flask-migrate
 celery[redis]

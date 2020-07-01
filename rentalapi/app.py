@@ -9,9 +9,11 @@ from celery import Celery
 from .dao.models import db, migrate, Vendors, Vehicles, Users, UserTypes
 from . import config
 
+from rentalapi.utils.jwtauth import jwt
 from rentalapi.schema import ma
 from rentalapi.api import api_bp
 from rentalapi.celery_util import init_celery
+from rentalapi.auth import auth_bp
 
 from . import celery
 
@@ -20,7 +22,8 @@ def create_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+    app.config['JWT_SECRET_KEY'] = config.JWT_SECRET_KEY
+    
     app.app_context().push()
 
     init_celery(celery, app)
@@ -31,16 +34,15 @@ def create_app():
 
     ma.init_app(app)
 
+    jwt.init_app(app)
+
+    app.register_blueprint(auth_bp)
     app.register_blueprint(api_bp)
     
-    cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+    cors = CORS(app)
 
     @app.after_request
     def after_request(response):
-        # response.headers.add('Access-Control-Allow-Origin', '*')
-        # response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        # response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        # response.headers.add('Access-Control-Allow-Credentials', 'true')
         if request.method == "OPTIONS":
             return app.response_class(response=response.data, status=200)
         else:
