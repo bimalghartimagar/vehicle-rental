@@ -31,7 +31,7 @@ def login():
   username = request.json.get('username', None)
   password = request.json.get('password', None)
   if not username or not password:
-    return jsonify({'msg': 'Invalid credentials.'}), 400
+    return jsonify({'msg': 'Invalid credentials.'}), 401
 
   user = Users.query.filter_by(username=username).first()
   if not user:

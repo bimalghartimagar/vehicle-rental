@@ -26,7 +26,7 @@ export default new Vuex.Store({
   },
   actions: {
     login: ({ commit }, user) => {
-      rentalApi
+      return rentalApi
         .post("auth/login/", {
           username: user.username,
           password: user.password
@@ -34,14 +34,14 @@ export default new Vuex.Store({
         .then(response => {
           localStorageService.setToken(response.data);
           commit("login_success", response.data);
-          Promise.resolve(user);
+          return Promise.resolve(user);
         })
         .catch(error => {
-          Promise.reject(error);
+          return Promise.reject(error);
         });
     },
     logout: ({ commit }) => {
-      rentalApi
+      return rentalApi
         .all([
           rentalApi.delete("auth/logout/"),
           rentalApi.delete("auth/logout2/")
@@ -49,12 +49,14 @@ export default new Vuex.Store({
         .then(() => {
           localStorageService.clearToken();
           commit("logout_success");
+          return Promise.resolve();
         })
         .catch(error => {
           if (error.response.status === 401) {
             localStorageService.clearToken();
             commit("logout_success");
           }
+          return Promise.reject(error);
         });
     }
   },

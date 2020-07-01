@@ -22,7 +22,7 @@ axios.interceptors.request.use(
     return config;
   },
   error => {
-    Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
@@ -32,7 +32,7 @@ function createResponseInterceptor() {
       return response;
     },
     error => {
-      const originalRequest = error.config
+      const originalRequest = error.config;
       if (
         error.response.status === 401 &&
         error.response.data.msg === "Token has expired"
@@ -44,7 +44,7 @@ function createResponseInterceptor() {
             if (response.status === 200) {
               localStorageService.refreshToken(response.data);
               store.dispatch("refresh_token", response.data);
-              return axios(originalRequest)
+              return axios(originalRequest);
             }
           })
           .catch(error => {
