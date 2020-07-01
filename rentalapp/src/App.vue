@@ -14,26 +14,29 @@
       <v-btn to="/contactus" text>
         <span class="mr-2">Contact Us</span>
       </v-btn>
-      <v-btn to="/vehicles" text>
+      <v-btn to="/vehicles" text v-if="isAuthenticated">
         <span class="mr-2">Vehicles</span>
       </v-btn>
-      <v-btn to="/vendors" text>
+      <v-btn to="/vendors" text v-if="isAuthenticated">
         <span class="mr-2">Vendors</span>
       </v-btn>
-      <v-btn to="/usertypes" text>
+      <v-btn to="/usertypes" text v-if="isAuthenticated">
         <span class="mr-2">User Types</span>
       </v-btn>
-      <v-btn text>
+      <v-btn text v-if="isAuthenticated">
         <span class="mr-2">Users</span>
       </v-btn>
-      <v-btn text>
+      <v-btn text v-if="isAuthenticated">
         <span class="mr-2">Rentals</span>
       </v-btn>
-      <v-btn to="/login" text>
+      <v-btn to="/login" text v-if="!isAuthenticated">
         <span class="mr-2">Login</span>
       </v-btn>
-      <v-btn to="/signup" text>
+      <v-btn to="/signup" text v-if="!isAuthenticated">
         <span class="mr-2">Sign Up</span>
+      </v-btn>
+      <v-btn @click="logout" text v-if="isAuthenticated">
+        <span class="mr-2">Log Out</span>
       </v-btn>
     </v-app-bar>
 
@@ -44,10 +47,20 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "App",
-  data: () => ({
-    //
-  })
+  data: () => ({}),
+
+  computed: {
+    ...mapGetters(["isAuthenticated"])
+  },
+
+  methods: {
+    logout: function() {
+      this.$store.dispatch("logout");
+    }
+  }
 };
 </script>

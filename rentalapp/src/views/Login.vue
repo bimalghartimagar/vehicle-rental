@@ -41,11 +41,6 @@
 </template>
 
 <script>
-import rentalApi from "../api/rentalApi";
-import localstorage from "../utils/localstorage.js";
-
-const localStorageService = localstorage.getService();
-
 export default {
   data() {
     return {
@@ -57,13 +52,12 @@ export default {
 
   methods: {
     login: function() {
-      rentalApi
-        .post("auth/login/", {
+      this.$store
+        .dispatch("login", {
           username: this.username,
           password: this.password
         })
-        .then(response => {
-          localStorageService.setToken(response.data);
+        .then(() => {
           this.$router.push("/");
         })
         .catch(error => {

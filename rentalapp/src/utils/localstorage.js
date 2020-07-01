@@ -13,6 +13,10 @@ const localstorage = (function() {
     localStorage.setItem("refresh_token", tokenObj.refresh_token);
   }
 
+  function _refreshToken(tokenObj) {
+    localStorage.setItem("access_token", tokenObj.access_token);
+  }
+
   function _getAccessToken() {
     return localStorage.getItem("access_token");
   }
@@ -29,6 +33,7 @@ const localstorage = (function() {
   return {
     getService: _getService,
     setToken: _setToken,
+    refreshToken: _refreshToken,
     getAccessToken: _getAccessToken,
     getRefreshToken: _getRefreshToken,
     clearToken: _clearToken
