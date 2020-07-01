@@ -32,6 +32,9 @@
       <v-btn to="/login" text>
         <span class="mr-2">Login</span>
       </v-btn>
+      <v-btn to="/signup" text>
+        <span class="mr-2">Sign Up</span>
+      </v-btn>
     </v-app-bar>
 
     <v-content>
