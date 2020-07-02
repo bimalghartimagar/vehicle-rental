@@ -1,4 +1,4 @@
-from . import celery
+from rentalapi import celery
 import time
 
 @celery.task()

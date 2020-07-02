@@ -1,6 +1,6 @@
 from celery import Celery
 
-from . import config
+from rentalapi import config
 
 celery = Celery(
   __name__,

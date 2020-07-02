@@ -6,8 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from celery import Celery
 
-from .dao.models import db, migrate, Vendors, Vehicles, Users, UserTypes
-from . import config
+from rentalapi.dao.models import db, migrate, Vendors, Vehicles, Users, UserTypes
+from rentalapi import config
 
 from rentalapi.utils.jwtauth import jwt
 from rentalapi.schema import ma
@@ -15,7 +15,7 @@ from rentalapi.api import api_bp
 from rentalapi.celery_util import init_celery
 from rentalapi.auth import auth_bp
 
-from . import celery
+from rentalapi import celery
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
