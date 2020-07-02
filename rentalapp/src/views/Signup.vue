@@ -94,7 +94,8 @@ export default {
         .post("auth/signup/", {
           email: this.email,
           username: this.username,
-          password: this.password
+          password: this.password,
+          type_id: 1
         })
         .then(response => {
           this.username = "";
