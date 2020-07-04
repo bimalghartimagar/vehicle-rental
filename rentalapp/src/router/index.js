@@ -28,15 +28,6 @@ const routes = [
     component: Home
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  },
-  {
     path: "/login",
     name: "Login",
     component: () =>
@@ -51,31 +42,38 @@ const routes = [
     beforeEnter: ifNotAuthenticated
   },
   {
-    path: "/contactus",
-    name: "CcontactUs",
+    path: "/dashboard",
+    name: "Dashboard",
     component: () =>
-      import(/* webpackChunkName: "contactus" */ "../views/ContactUs.vue")
-  },
-  {
-    path: "/vehicles",
-    name: "Vehicles",
-    component: () =>
-      import(/* webpackChunkName: "vehicles" */ "../views/Vehicles.vue"),
-    beforeEnter: ifAuthenticated
-  },
-  {
-    path: "/vendors",
-    name: "vendors",
-    component: () =>
-      import(/* webpackChunkName: "vendors" */ "../views/Vendors.vue"),
-    beforeEnter: ifAuthenticated
-  },
-  {
-    path: "/usertypes",
-    name: "UserTypes",
-    component: () =>
-      import(/* webpackChunkName: "usertypes" */ "../views/UserTypes.vue"),
-    beforeEnter: ifAuthenticated
+      import(/* webpackChunkName: "dashboard" */ "../views/Dashboard.vue"),
+    beforeEnter: ifAuthenticated,
+    children: [
+      {
+        path: "vehicles",
+        name: "Vehicles",
+        component: () =>
+          import(
+            /* webpackChunkName: "vehicles" */ "../components/Vehicles.vue"
+          )
+        // beforeEnter: ifAuthenticated
+      },
+      {
+        path: "vendors",
+        name: "vendors",
+        component: () =>
+          import(/* webpackChunkName: "vendors" */ "../components/Vendors.vue")
+        // beforeEnter: ifAuthenticated
+      },
+      {
+        path: "usertypes",
+        name: "UserTypes",
+        component: () =>
+          import(
+            /* webpackChunkName: "usertypes" */ "../components/UserTypes.vue"
+          )
+        // beforeEnter: ifAuthenticated
+      }
+    ]
   }
 ];
 

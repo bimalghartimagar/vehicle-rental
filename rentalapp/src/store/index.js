@@ -62,7 +62,7 @@ export default new Vuex.Store({
   },
   modules: {},
   getters: {
-    isAuthenticated: state => !!state.access_token,
+    isAuthenticated: state => !!state.access_token && !!state.refresh_token,
     getRefreshToken: state => state.refresh_token
   }
 });
