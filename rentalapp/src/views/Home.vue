@@ -117,6 +117,6 @@ export default {
 
   computed: {
     ...mapGetters(["isAuthenticated"])
-  },
+  }
 };
 </script>

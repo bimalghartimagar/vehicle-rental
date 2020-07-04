@@ -1,8 +1,8 @@
 <template>
-<v-content>
-  <Sidebar></Sidebar>
-  <router-view></router-view>
-</v-content>
+  <v-content>
+    <Sidebar></Sidebar>
+    <router-view></router-view>
+  </v-content>
 </template>
 
 <script>
