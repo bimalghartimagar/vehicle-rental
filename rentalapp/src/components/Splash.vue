@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container id="splash">
     <v-row class="text-center mt-n12" no-gutters>
       <v-col cols="3" class="px-8">
         <v-img
