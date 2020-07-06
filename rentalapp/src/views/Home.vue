@@ -2,7 +2,15 @@
   <v-scroll>
     <v-content name="home">
       <div class="main-bg rounded-b-xl" id="home">
-        <v-app-bar app hide-on-scroll dense color="unset" flat light class="nav-header">
+        <v-app-bar
+          app
+          hide-on-scroll
+          dense
+          color="unset"
+          flat
+          light
+          class="nav-header"
+        >
           <div class="d-flex align-center display-1">Vehicle Rental</div>
 
           <v-spacer></v-spacer>
@@ -31,28 +39,33 @@
         </v-app-bar>
 
         <v-card class="my-8 mx-auto ml-12" max-width="374">
-          <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
-          <v-card-title>Cafe Badilico</v-card-title>
+          <v-card-title>Start your trip here</v-card-title>
 
           <v-card-text>
-            <v-row align="center" class="mx-0">
-              <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
+            <v-text-field
+            label="Pick-up Location"
+            outlined
+          ></v-text-field>
 
-              <div class="grey--text ml-4">4.5 (413)</div>
-            </v-row>
+            <v-text-field
+            label="Drop-off Location"
+            outlined
+          ></v-text-field>
 
-            <div class="my-4 subtitle-1">$ • Italian, Cafe</div>
+            <v-text-field
+            label="Pick-up Date"
+            outlined
+          ></v-text-field>
 
-            <div>
-              Small plates, salads & sandwiches - an intimate setting with 12
-              indoor seats plus patio seating.
-            </div>
+            <v-text-field
+            label="Drop-off Date"
+            outlined
+          ></v-text-field>
+
           </v-card-text>
 
-          <v-divider class="mx-4"></v-divider>
-
-          <v-card-title>Tonight's availability</v-card-title>
+          <!-- <v-card-title>Tonight's availability</v-card-title>
 
           <v-card-text>
             <v-chip-group
@@ -68,16 +81,22 @@
 
               <v-chip>9:00PM</v-chip>
             </v-chip-group>
-          </v-card-text>
+          </v-card-text> -->
 
           <v-card-actions>
-            <v-btn color="deep-purple lighten-2" text @click="reserve">Reserve</v-btn>
+            <v-btn color="green" block @click="reserve"
+              >Reserve</v-btn
+            >
           </v-card-actions>
         </v-card>
-        <Splash />
+      </div>
+        <Splash class="mt-n8"/>
+        <Services />
+        <HowItWorks />
+        <Testimonial />
         <About />
         <ContactUs />
-      </div>
+        <Footer />
     </v-content>
   </v-scroll>
 </template>
@@ -88,6 +107,10 @@ import { mapGetters } from "vuex";
 import Splash from "@/components/Splash.vue";
 import About from "@/components/About.vue";
 import ContactUs from "@/components/ContactUs.vue";
+import Services from "@/components/Services.vue";
+import HowItWorks from "@/components/HowItWorks.vue";
+import Testimonial from "@/components/Testimonial.vue";
+import Footer from "@/components/Footer.vue";
 
 export default {
   name: "Home",
@@ -95,7 +118,11 @@ export default {
   components: {
     Splash,
     About,
-    ContactUs
+    ContactUs,
+    Services,
+    HowItWorks,
+    Testimonial,
+    Footer
   },
 
   data() {
