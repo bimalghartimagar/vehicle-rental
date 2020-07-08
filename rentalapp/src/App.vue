@@ -39,8 +39,6 @@ export default {
   margin-top: -64px;
   padding-top: 90px;
   padding-bottom: 80px;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
 }
 .nav-header {
   background: unset !important;

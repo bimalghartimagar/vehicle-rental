@@ -1,7 +1,7 @@
 <template>
   <v-scroll>
-    <v-content name="home">
-      <div class="main-bg rounded-b-xl" id="home">
+    <v-content name="home" class="main-container">
+      <div class="main-bg" id="home">
         <v-app-bar
           app
           hide-on-scroll
@@ -17,6 +17,15 @@
 
           <v-btn @click="$vuetify.goTo('#home', options)" text>
             <span class="mr-2">Home</span>
+          </v-btn>
+          <v-btn @click="$vuetify.goTo('#services', options)" text>
+            <span class="mr-2">Services</span>
+          </v-btn>
+          <v-btn @click="$vuetify.goTo('#howitworks', options)" text>
+            <span class="mr-2">How It Works</span>
+          </v-btn>
+          <v-btn @click="$vuetify.goTo('#testimonials', options)" text>
+            <span class="mr-2">Testimonials</span>
           </v-btn>
           <v-btn @click="$vuetify.goTo('#about', options)" text>
             <span class="mr-2">About</span>
@@ -39,30 +48,16 @@
         </v-app-bar>
 
         <v-card class="my-8 mx-auto ml-12" max-width="374">
-
           <v-card-title>Start your trip here</v-card-title>
 
           <v-card-text>
-            <v-text-field
-            label="Pick-up Location"
-            outlined
-          ></v-text-field>
+            <v-text-field label="Pick-up Location" outlined></v-text-field>
 
-            <v-text-field
-            label="Drop-off Location"
-            outlined
-          ></v-text-field>
+            <v-text-field label="Drop-off Location" outlined></v-text-field>
 
-            <v-text-field
-            label="Pick-up Date"
-            outlined
-          ></v-text-field>
+            <v-text-field label="Pick-up Date" outlined></v-text-field>
 
-            <v-text-field
-            label="Drop-off Date"
-            outlined
-          ></v-text-field>
-
+            <v-text-field label="Drop-off Date" outlined></v-text-field>
           </v-card-text>
 
           <!-- <v-card-title>Tonight's availability</v-card-title>
@@ -84,19 +79,17 @@
           </v-card-text> -->
 
           <v-card-actions>
-            <v-btn color="green" block @click="reserve"
-              >Reserve</v-btn
-            >
+            <v-btn color="green" block @click="reserve">Reserve</v-btn>
           </v-card-actions>
         </v-card>
       </div>
-        <Splash class="mt-n8"/>
-        <Services />
-        <HowItWorks />
-        <Testimonial />
-        <About />
-        <ContactUs />
-        <Footer />
+      <Splash class="mt-n8" />
+      <Services />
+      <HowItWorks />
+      <Testimonial />
+      <About />
+      <ContactUs />
+      <Footer />
     </v-content>
   </v-scroll>
 </template>
@@ -129,7 +122,7 @@ export default {
     return {
       options: {
         duration: 500,
-        offset: 10,
+        offset: 0,
         easing: "linear"
       }
     };
@@ -140,3 +133,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.main-container {
+  background-color: lightgray;
+}
+</style>
