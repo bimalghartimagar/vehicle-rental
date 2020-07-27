@@ -16,7 +16,7 @@ auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 blacklist = set()
 
-token_expiry_minutes = 1
+token_expiry_minutes = 120
 
 @jwt.token_in_blacklist_loader
 def is_token_blacklist(decrypted_token):
