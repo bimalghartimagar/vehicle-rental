@@ -58,6 +58,7 @@ class VehicleSchema(ma.SQLAlchemyAutoSchema):
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Users
+        exclude = ('password',)
 
     usertype = ma.HyperlinkRelated(
                 'api.usertypeapi',
@@ -69,3 +70,9 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
 class RentalSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Rentals
+        include_fk = True
+
+    driver = ma.Nested(UserSchema)
+    user = ma.Nested(UserSchema)
+    vehicle = ma.Nested(VehicleSchema)
+

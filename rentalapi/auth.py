@@ -61,10 +61,10 @@ def signup():
   try:
     db.session.add(user)
     db.session.commit()
-  except:
+    return jsonify({'msg': 'Successfully registered. Login to use the application.'}), 200
+  except Exception as e:
     db.session.rollback()
-
-  return jsonify({'msg': 'Successfully registered. Login to use the application.'}), 200
+    return jsonify({'error': str(e)}), 400
 
 @auth_bp.route('/refresh/', methods=['POST'])
 @jwt_refresh_token_required
