@@ -1,4 +1,4 @@
-FROM node:14.3.0-alpine3.11
+FROM node:14.6.0-alpine3.12
 
 RUN mkdir /rentalapp/
 

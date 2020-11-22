@@ -2,62 +2,70 @@
   <v-scroll>
     <v-content name="home" class="main-container">
       <div class="main-bg" id="home">
-        <v-app-bar
-          app
-          hide-on-scroll
-          dense
-          color="unset"
-          flat
-          light
-          class="nav-header"
-        >
-          <div class="d-flex align-center display-1">Vehicle Rental</div>
-
-          <v-spacer></v-spacer>
-
-          <v-btn @click="$vuetify.goTo('#home', options)" text>
-            <span class="mr-2">Home</span>
-          </v-btn>
-          <v-btn @click="$vuetify.goTo('#services', options)" text>
-            <span class="mr-2">Services</span>
-          </v-btn>
-          <v-btn @click="$vuetify.goTo('#howitworks', options)" text>
-            <span class="mr-2">How It Works</span>
-          </v-btn>
-          <v-btn @click="$vuetify.goTo('#testimonials', options)" text>
-            <span class="mr-2">Testimonials</span>
-          </v-btn>
-          <v-btn @click="$vuetify.goTo('#about', options)" text>
-            <span class="mr-2">About</span>
-          </v-btn>
-          <v-btn @click="$vuetify.goTo('#contactus', options)" text>
-            <span class="mr-2">Contact Us</span>
-          </v-btn>
-          <v-btn to="/dashboard" text v-if="isAuthenticated">
-            <span class="mr-2">Dashboard</span>
-          </v-btn>
-          <v-btn to="/login" text v-if="!isAuthenticated">
-            <span class="mr-2">Login</span>
-          </v-btn>
-          <v-btn to="/signup" text v-if="!isAuthenticated">
-            <span class="mr-2">Sign Up</span>
-          </v-btn>
-          <v-btn @click="logout" text v-if="isAuthenticated">
-            <span class="mr-2">Log Out</span>
-          </v-btn>
-        </v-app-bar>
-
+        <NavBar />
         <v-card class="my-8 mx-auto ml-12" max-width="374">
           <v-card-title>Start your trip here</v-card-title>
 
           <v-card-text>
-            <v-text-field label="Pick-up Location" outlined></v-text-field>
+            <v-text-field
+              prepend-icon="mdi-map-marker"
+              label="Pick-up Location"
+              outlined
+            ></v-text-field>
 
-            <v-text-field label="Drop-off Location" outlined></v-text-field>
+            <v-text-field
+              prepend-icon="mdi-map-marker"
+              label="Drop-off Location"
+              outlined
+            ></v-text-field>
 
-            <v-text-field label="Pick-up Date" outlined></v-text-field>
+            <v-menu
+              v-model="menu1"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="startDate"
+                  prepend-icon="mdi-calendar"
+                  label="Pick-up Date"
+                  outlined
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="startDate"
+                @input="menu1 = false"
+              ></v-date-picker>
+            </v-menu>
 
-            <v-text-field label="Drop-off Date" outlined></v-text-field>
+            <v-menu
+              v-model="menu2"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="endDate"
+                  prepend-icon="mdi-calendar"
+                  label="Drop-off Date"
+                  outlined
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="endDate"
+                @input="menu2 = false"
+              ></v-date-picker>
+            </v-menu>
           </v-card-text>
 
           <!-- <v-card-title>Tonight's availability</v-card-title>
@@ -95,15 +103,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
-import Splash from "@/components/Splash.vue";
-import About from "@/components/About.vue";
-import ContactUs from "@/components/ContactUs.vue";
-import Services from "@/components/Services.vue";
-import HowItWorks from "@/components/HowItWorks.vue";
-import Testimonial from "@/components/Testimonial.vue";
-import Footer from "@/components/Footer.vue";
+import Splash from "@/components/home/Splash.vue";
+import About from "@/components/home/About.vue";
+import ContactUs from "@/components/home/ContactUs.vue";
+import Services from "@/components/home/Services.vue";
+import HowItWorks from "@/components/home/HowItWorks.vue";
+import Testimonial from "@/components/home/Testimonial.vue";
+import Footer from "@/components/home/Footer.vue";
+import NavBar from "@/components/shared/NavBar.vue";
 
 export default {
   name: "Home",
@@ -115,21 +122,8 @@ export default {
     Services,
     HowItWorks,
     Testimonial,
-    Footer
-  },
-
-  data() {
-    return {
-      options: {
-        duration: 500,
-        offset: 0,
-        easing: "linear"
-      }
-    };
-  },
-
-  computed: {
-    ...mapGetters(["isAuthenticated"])
+    Footer,
+    NavBar
   }
 };
 </script>

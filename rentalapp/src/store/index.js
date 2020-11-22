@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import rentalApi from "../api/rentalApi";
+import rentalApi from "@/api/rentalApi";
 import localstorage from "../utils/localstorage.js";
 const localStorageService = localstorage.getService();
 

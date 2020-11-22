@@ -17,7 +17,7 @@ class TimeStampMixin(object):
 class Vendors(db.Model, TimeStampMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    # vehicles = db.relationship('Vehicles', backref='vendor', lazy=True)
+    vehicles = db.relationship('Vehicles', backref='vendor', lazy=True)
 
     def __repr__(self):
         return '<Vendor %r>' % self.name
@@ -53,6 +53,7 @@ class Rentals(db.Model, TimeStampMixin):
 
     driver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
 
     days = db.Column(db.Integer, nullable=False)
     driver_rate = db.Column(db.Float, nullable=False)
@@ -61,9 +62,11 @@ class Rentals(db.Model, TimeStampMixin):
     dispatched = db.Column(db.DateTime)
     returned = db.Column(db.DateTime)
 
-    driverR = db.relationship('Users', foreign_keys='rentals.c.driver_id',
+    vehicle = db.relationship('Vehicles', foreign_keys='rentals.c.vehicle_id', backref="vehicle", lazy=True)
+
+    driver = db.relationship('Users', foreign_keys='rentals.c.driver_id',
                               backref='driver', lazy=True)
-    userR = db.relationship('Users', foreign_keys='rentals.c.user_id',
+    user = db.relationship('Users', foreign_keys='rentals.c.user_id',
                             backref='user', lazy=True)
 
     def __repr__(self):

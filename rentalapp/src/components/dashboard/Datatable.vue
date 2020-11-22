@@ -35,7 +35,7 @@
                         v-if="hasList(name)"
                         :items="hasList(name)"
                         :label="getLabelName(name)"
-                        :item-text="'name'"
+                        :item-text="getLabelForDropdown(name)"
                         :item-value="'id'"
                         v-model="editedItem[name]"
                       ></v-select>
@@ -58,7 +58,7 @@
     <template
       v-for="value in headersWithList"
       v-slot:[getAttrName(value.value)]="{ item }"
-      >{{ getNameFromList(item, value.list) }}
+      >{{ getNameFromList(item, value.list, value.value, value.label) }}
     </template>
 
     <template v-slot:item.actions="{ item }">
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import rentalApi from "../api/rentalApi";
+import rentalApi from "@/api/rentalApi";
 
 export default {
   props: ["headers", "items", "crudObject", "title", "postUrl", "putUrl"],
@@ -177,13 +177,18 @@ export default {
       if (Object.prototype.hasOwnProperty.call(item, "list")) return item.list;
       return false;
     },
-    getNameFromList(item, list) {
-      let items = list.filter(x => x.id === item.vendor_id);
+    getNameFromList(item, list, attr, label) {
+      let items = list.filter(x => x.id === item[attr]);
       if (items.length == 0) return;
-      return items[0].name;
+      return items[0][label];
     },
     getAttrName(value) {
       return "item." + value;
+    },
+    getLabelForDropdown(name) {
+      let items = this.headers.filter(x => x.value === name);
+      if (items.length == 0) return "NO-VALUE";
+      return items[0]["label"];
     }
   }
 };
