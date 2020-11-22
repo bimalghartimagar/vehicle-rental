@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import rentalApi from "../api/rentalApi";
-import Datatable from "../components/Datatable";
+import rentalApi from "@/api/rentalApi";
+import Datatable from "@/components/dashboard/Datatable";
 
 export default {
   components: {
@@ -35,7 +35,12 @@ export default {
         { text: "Make Year", value: "make_year" },
         { text: "Rate", value: "rate" },
         { text: "Type", value: "type" },
-        { text: "Vendor", value: "vendor_id", list: this.vendors },
+        {
+          text: "Vendor",
+          value: "vendor_id",
+          list: this.vendors,
+          label: "name"
+        },
         { text: "Created", value: "created" },
         { text: "Updated", value: "updated" },
         { text: "Actions", value: "actions", sortable: false }

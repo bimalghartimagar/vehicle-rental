@@ -119,7 +119,8 @@
 </template>
 
 <style scoped>
-.footer-container, .footer-container >>> a {
+.footer-container,
+.footer-container >>> a {
   background-color: #333;
   color: white;
 }

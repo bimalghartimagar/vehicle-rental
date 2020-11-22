@@ -8,24 +8,24 @@
         </div>
         <v-row>
           <template v-for="testimony in testimonials">
-            <v-col cols="3" :key="testimony.name + testimony.position">
+            <v-col cols="3" :key="testimony.id + testimony.position">
               <v-card>
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div>
                     <v-card-subtitle>
-                      {{testimony.testimony}}
+                      {{ testimony.testimony }}
                     </v-card-subtitle>
                     <v-card-subtitle>
-                      {{testimony.name}},<br/>{{testimony.position}}
+                      {{ testimony.name }},<br />{{ testimony.position }}
                     </v-card-subtitle>
                   </div>
-                  <v-avatar
-                    class="ma-2 ml-1"
-                    size="125"
-                    tile
-                  >
-                  <v-img :src="'https://api.adorable.io/avatars/126/abott@adorable.png'"></v-img>
-                </v-avatar>
+                  <v-avatar class="ma-2 ml-1" size="125" tile>
+                    <v-img
+                      :src="
+                        'https://api.adorable.io/avatars/126/abott@adorable.png'
+                      "
+                    ></v-img>
+                  </v-avatar>
                 </div>
               </v-card>
             </v-col>
@@ -45,72 +45,83 @@ export default {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "UI Designer"
+          position: "UI Designer",
+          id: 1
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "Web Developer"
-        },
-
-        {
-          testimony:
-            "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
-          name: "Roger Scott",
-          position: "System Analyst"
+          position: "Web Developer",
+          id: 11
         },
 
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "Marketing Manager"
+          position: "System Analyst",
+          id: 111
         },
 
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "Interface Designer"
+          position: "Marketing Manager",
+          id: 1111
         },
 
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "UI Designer"
+          position: "Interface Designer",
+          id: 11111
         },
 
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "Web Developer"
+          position: "UI Designer",
+          id: 12
+        },
+
+        {
+          testimony:
+            "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
+          name: "Roger Scott",
+          position: "Web Developer",
+          id: 13
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "System Analyst"
+          position: "System Analyst",
+          id: 14
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "Marketing Manager"
+          position: "Marketing Manager",
+          id: 15
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "Interface Designer"
+          position: "Interface Designer",
+          id: 16
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
-          position: "UI Designer"
+          position: "UI Designer",
+          id: 17
         }
       ]
     };

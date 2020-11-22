@@ -103,7 +103,6 @@
 </template>
 
 <script>
-
 import Splash from "@/components/home/Splash.vue";
 import About from "@/components/home/About.vue";
 import ContactUs from "@/components/home/ContactUs.vue";
@@ -111,7 +110,7 @@ import Services from "@/components/home/Services.vue";
 import HowItWorks from "@/components/home/HowItWorks.vue";
 import Testimonial from "@/components/home/Testimonial.vue";
 import Footer from "@/components/home/Footer.vue";
-import NavBar from "@/components/shared/NavBar.vue"
+import NavBar from "@/components/shared/NavBar.vue";
 
 export default {
   name: "Home",
@@ -125,7 +124,7 @@ export default {
     Testimonial,
     Footer,
     NavBar
-  },
+  }
 };
 </script>
 

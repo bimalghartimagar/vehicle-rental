@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import rentalApi from "../api/rentalApi";
-import Datatable from "../components/Datatable";
+import rentalApi from "@/api/rentalApi";
+import Datatable from "@/components/dashboard/Datatable";
 
 export default {
   components: {

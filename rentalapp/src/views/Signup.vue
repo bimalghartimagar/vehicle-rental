@@ -1,6 +1,6 @@
 <template>
   <v-container class="fill-height" fluid>
-    <nav-bar/>
+    <nav-bar />
     <v-row align="center" justify="center">
       <v-col cols="12" sm="8" md="4">
         <h1 class="text-center">Sign up for Vehicle Rental</h1>
@@ -60,7 +60,7 @@
 
 <script>
 import rentalApi from "@/api/rentalApi";
-import NavBar from '../components/shared/NavBar.vue';
+import NavBar from "../components/shared/NavBar.vue";
 
 export default {
   components: { NavBar },

@@ -12,22 +12,42 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn small to='/' @click="$vuetify.goTo('#home', options)" text>
+    <v-btn small to="/" @click="$vuetify.goTo('#home', options)" text>
       <span class="mr-2">Home</span>
     </v-btn>
-    <v-btn small to='/#services' @click="$vuetify.goTo('#services', options)" text>
+    <v-btn
+      small
+      to="/#services"
+      @click="$vuetify.goTo('#services', options)"
+      text
+    >
       <span class="mr-2">Services</span>
     </v-btn>
-    <v-btn small to='/#howitworks' @click="$vuetify.goTo('#howitworks', options)" text>
+    <v-btn
+      small
+      to="/#howitworks"
+      @click="$vuetify.goTo('#howitworks', options)"
+      text
+    >
       <span class="mr-2">How It Works</span>
     </v-btn>
-    <v-btn small to='/#testimonials' @click="$vuetify.goTo('#testimonials', options)" text>
+    <v-btn
+      small
+      to="/#testimonials"
+      @click="$vuetify.goTo('#testimonials', options)"
+      text
+    >
       <span class="mr-2">Testimonials</span>
     </v-btn>
-    <v-btn small to='/#about' @click="$vuetify.goTo('#about', options)" text>
+    <v-btn small to="/#about" @click="$vuetify.goTo('#about', options)" text>
       <span class="mr-2">About</span>
     </v-btn>
-    <v-btn small to='/#contactus' @click="$vuetify.goTo('#contactus', options)" text>
+    <v-btn
+      small
+      to="/#contactus"
+      @click="$vuetify.goTo('#contactus', options)"
+      text
+    >
       <span class="mr-2">Contact Us</span>
     </v-btn>
     <v-btn small to="/dashboard" text v-if="isAuthenticated">
