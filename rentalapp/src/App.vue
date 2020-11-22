@@ -1,31 +1,8 @@
 <template>
   <v-app class="app">
-    <v-main name="app">
-      <router-view></router-view>
-    </v-main>
+    <router-view></router-view>
   </v-app>
 </template>
-
-<script>
-import { mapGetters } from "vuex";
-
-export default {
-  name: "App",
-  data: () => ({}),
-
-  computed: {
-    ...mapGetters(["isAuthenticated"])
-  },
-
-  methods: {
-    logout: function() {
-      this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
-      });
-    }
-  }
-};
-</script>
 
 <style>
 .app {
