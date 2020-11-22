@@ -2,7 +2,7 @@ import sys
 import click
 from flask.cli import with_appcontext
 from .dao.models import db, UserTypes, Vendors, Vehicles, Users, Rentals
-
+from datetime import datetime
 
 @click.command('dummy')
 @with_appcontext
@@ -18,7 +18,9 @@ def insert_dummy_data():
             last_name='userl',
             username='user',
             email='user@email.com',
+            password='user',
             rate=0)
+        user.hash_password()
         user.usertype = userT
         db.session.add(user)
 
@@ -27,7 +29,9 @@ def insert_dummy_data():
             last_name='driverl',
             username='driver',
             email='driver@email.com',
+            password='driver',
             rate=0)
+        driver.hash_password()
         driver.usertype = driverT
         db.session.add(driver)
 
@@ -36,17 +40,13 @@ def insert_dummy_data():
             last_name='supplierl',
             username='supplier',
             email='supplier@email.com',
+            password='supplier',
             rate=0)
-
+        supplier.hash_password()
         supplier.usertype = supplierT
         db.session.add(supplier)
         db.session.commit()
-    except Exception:
-        import traceback
-        traceback.print_exc(file=sys.stdout)
-        db.session.rollback()
 
-    try:
         honda = Vendors(name='Honda')
         hero = Vendors(name='Hero')
         hyundai = Vendors(name='Hyundai')
@@ -81,6 +81,23 @@ def insert_dummy_data():
         vehicle3.vendor = hero
         db.session.add(vehicle3)
         db.session.commit()
+
+        rental1 = Rentals(
+            # driver_id
+            # user_id
+            days = 7,
+            driver_rate = 2000,
+            vehicle_rate = 4000,
+            status = 'BOOKED',
+            dispatched = datetime.now(),
+            returned = None,
+            vehicle = vehicle1,
+            driver = driver,
+            user = user,
+        )
+        db.session.add(rental1)
+        db.session.commit()
+        
     except Exception:
         import traceback
         traceback.print_exc(file=sys.stdout)
