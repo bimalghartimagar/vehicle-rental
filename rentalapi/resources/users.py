@@ -9,7 +9,7 @@ users_schema = UserSchema(many=True)
 
 
 class UsersAPI(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self):
         users = Users.query.all()
 

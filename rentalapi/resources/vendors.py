@@ -11,7 +11,7 @@ vendor_schema = VendorSchema()
 vendors_schema = VendorSchema(many=True)
 
 class VendorsAPI(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self):
         vendors = Vendors.query.all()
 

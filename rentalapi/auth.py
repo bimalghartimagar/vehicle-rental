@@ -1,11 +1,10 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import (
     jwt_required, 
-    jwt_refresh_token_required,
     create_access_token,
     create_refresh_token,
     get_jwt_identity,
-    get_raw_jwt
+    get_jwt
 )
 
 import datetime
@@ -14,14 +13,14 @@ from rentalapi.dao.models import Users, db
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/api/auth')
 
-blacklist = set()
+blocklist = set()
 
 token_expiry_minutes = 120
 
-@jwt.token_in_blacklist_loader
-def is_token_blacklist(decrypted_token):
-  jti = decrypted_token['jti']
-  return jti in blacklist
+@jwt.token_in_blocklist_loader
+def is_token_blocklist(jwt_header, jwt_data):
+  jti = jwt_data['jti']
+  return jti in blocklist
 
 @auth_bp.route('/login/', methods=['POST'])
 def login():
@@ -67,7 +66,7 @@ def signup():
     return jsonify({'error': str(e)}), 400
 
 @auth_bp.route('/refresh/', methods=['POST'])
-@jwt_refresh_token_required
+@jwt_required(refresh=True)
 def refresh():
   current_user = get_jwt_identity()
   expires = datetime.timedelta(minutes=token_expiry_minutes)
@@ -77,19 +76,19 @@ def refresh():
   pass
 
 @auth_bp.route('/logout/', methods=['DELETE'])
-@jwt_required
+@jwt_required()
 def logout():
-  jti = get_raw_jwt()['jti']
-  blacklist.add(jti)
+  jti = get_jwt()['jti']
+  blocklist.add(jti)
   return jsonify({
     'msg': 'Logged out successfully.'
   }), 200
 
 @auth_bp.route('/logout2/', methods=['DELETE'])
-@jwt_refresh_token_required
+@jwt_required(refresh=True)
 def logout2():
-  jti = get_raw_jwt()['jti']
-  blacklist.add(jti)
+  jti = get_jwt()['jti']
+  blocklist.add(jti)
   return jsonify({
     'msg': 'Logged out successfully.'
   }), 200

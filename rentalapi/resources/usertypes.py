@@ -13,10 +13,9 @@ user_type_schema = UserTypeSchema()
 user_types_schema = UserTypeSchema(many=True)
 
 class UserTypesAPI(Resource):
-    @jwt_required
+    @jwt_required()
     def get(self):
         user_types = UserTypesModel.query.all()
-        add.delay(random.randint(0,1000), random.randint(0,1000))
         return user_types_schema.dump(user_types)
 
     def post(self):

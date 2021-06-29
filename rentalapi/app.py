@@ -23,7 +23,7 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['JWT_SECRET_KEY'] = config.JWT_SECRET_KEY
-    
+
     app.app_context().push()
 
     init_celery(celery, app)
@@ -38,7 +38,7 @@ def create_app():
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(api_bp)
-    
+
     cors = CORS(app)
 
     @app.after_request
@@ -62,11 +62,11 @@ def create_app():
     @app.route('/')
     def home():
         return json.dumps(
-                    {
-                        "message": "Welcome to Vehicle Rental API.",
-                        "url": "{}api/".format(request.base_url)
-                    }
-                )
+            {
+                "message": "Welcome to Vehicle Rental API.",
+                "url": "{}api/".format(request.base_url)
+            }
+        )
 
     return app
 
