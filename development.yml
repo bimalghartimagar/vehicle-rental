@@ -3,8 +3,13 @@ version: '3.6'
 services:
   rentalapi:
     build: ./rentalapi
+    depends_on:
+      - rentalpgdb
+      - rentalredis
+    links:
+      - rentalpgdb
     ports:
-      - '8091:8000'
+      - '8098:8000'
     volumes:
       - ./rentalapi:/rentalapi
     env_file: conf/dev.env
@@ -13,18 +18,10 @@ services:
   rentalpgdb:
     image: postgres:alpine
     env_file: conf/dev.env
-    ports:
-      - '5433:5432'
+    # ports:
+    #   - '5433:5432'
     volumes:
       - rentaldb_volume:/var/lib/postgresql
-  
-  rentalapp:
-    build: ./rentalapp
-    ports:
-      - '8090:8080'
-    volumes:
-      - ./rentalapp:/rentalapp
-    command: ['yarn', 'serve']
 
   rentalredis:
     image: redis:alpine
@@ -33,6 +30,16 @@ services:
     volumes:
       - rentalredis_volume:/data
       - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+
+  rentalapp:
+    build: ./rentalapp
+    depends_on:
+      - rentalapi
+    ports:
+      - '8097:8080'
+    volumes:
+      - ./rentalapp:/rentalapp
+    command: ['yarn', 'serve']
 
 volumes:
   rentaldb_volume:
