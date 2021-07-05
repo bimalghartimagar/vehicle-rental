@@ -1,8 +1,5 @@
 import sys
 import click
-from faker import Faker
-from faker_vehicle import VehicleProvider
-
 
 from flask.cli import with_appcontext
 from .dao.models import db, UserTypes, Vendors, Vehicles, Users, Rentals
@@ -51,6 +48,7 @@ def insert_dummy_data():
         db.session.add(supplier)
         db.session.commit()
 
+        seed_prod_data()
     except Exception:
         import traceback
         traceback.print_exc(file=sys.stdout)
@@ -60,6 +58,9 @@ def insert_dummy_data():
 @with_appcontext
 def seed_data():
     try:
+        from faker import Faker
+        from faker_vehicle import VehicleProvider
+        
         vendor_cache = {}
 
         fake = Faker()
@@ -84,6 +85,26 @@ def seed_data():
             
             vehicle1.vendor = vendor
             db.session.add(vehicle1)
+        db.session.commit()
+    except Exception:
+        import traceback
+        traceback.print_exc(file=sys.stdout)
+        db.session.rollback()
+
+def seed_prod_data():
+    try:
+        adminT = UserTypes(name='Admin')
+
+        admin = Users(
+            first_name='admin',
+            last_name='admin',
+            username='admin',
+            email='admin@admin.com',
+            password='admin123',
+            rate=0)
+        admin.hash_password()
+        admin.usertype = adminT
+        db.session.add(admin)
         db.session.commit()
     except Exception:
         import traceback

@@ -52,6 +52,9 @@ def create_app():
         from .seed_data import insert_dummy_data, seed_data
         app.cli.add_command(insert_dummy_data)
         app.cli.add_command(seed_data)
+    elif app.config['ENV'] == 'production':
+        from .seed_data import seed_prod_data
+        seed_prod_data()
 
     try:
         os.makedirs(app.instance_path, exist_ok=True)
