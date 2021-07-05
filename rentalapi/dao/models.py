@@ -30,7 +30,7 @@ class Vehicles(db.Model, TimeStampMixin):
     color = db.Column(db.String(20), nullable=False)
     make_year = db.Column(db.String, nullable=False)
     rate = db.Column(db.Float, nullable=False)
-    type = db.Column(db.String(5), nullable=False)
+    type = db.Column(db.String(20), nullable=False)
     vendor_id = db.Column(db.Integer, db.ForeignKey('vendors.id'),
                           nullable=False)
     img_url = db.Column(db.String, nullable=True)

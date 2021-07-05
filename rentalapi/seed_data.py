@@ -1,5 +1,9 @@
 import sys
 import click
+from faker import Faker
+from faker_vehicle import VehicleProvider
+
+
 from flask.cli import with_appcontext
 from .dao.models import db, UserTypes, Vendors, Vehicles, Users, Rentals
 from datetime import datetime
@@ -47,57 +51,40 @@ def insert_dummy_data():
         db.session.add(supplier)
         db.session.commit()
 
-        honda = Vendors(name='Honda')
-        hero = Vendors(name='Hero')
-        hyundai = Vendors(name='Hyundai')
+    except Exception:
+        import traceback
+        traceback.print_exc(file=sys.stdout)
+        db.session.rollback()
 
-        vehicle1 = Vehicles(
-            name='Amaze',
-            seats='4',
-            color='Red',
-            make_year='2018',
-            rate='4000',
-            type='CAR')
-        vehicle1.vendor = honda
-        db.session.add(vehicle1)
+@click.command('seed')
+@with_appcontext
+def seed_data():
+    try:
+        vendor_cache = {}
 
-        vehicle2 = Vehicles(
-            name='Creta',
-            seats='5',
-            color='Orange',
-            make_year='2019',
-            rate='5000',
-            type='CAR')
-        vehicle2.vendor = hyundai
-        db.session.add(vehicle2)
+        fake = Faker()
+        fake.add_provider(VehicleProvider)
 
-        vehicle3 = Vehicles(
-            name='Glamour',
-            seats='2',
-            color='Blue',
-            make_year='2019',
-            rate='5000',
-            type='BIKE')
-        vehicle3.vendor = hero
-        db.session.add(vehicle3)
+        for i in range(100):
+            fake_vehicle = fake.vehicle_object()
+            vehicle1 = Vehicles(
+            name=fake_vehicle['Model'],
+            seats=fake.random_choices(elements=(2,4,5,7,8), length=1),
+            color=fake.random_choices(elements=('Silver', 'Gray', 'White', 'Red', 'Blue', 'Sublime', 'Sublime', 'Glowing Yellow', 'Yellow', 'Stainless Steel', 'Purple', 'Pearl', 'Gold', 'Green', 'Orange', 'Copper'), length=1),
+            make_year=fake_vehicle['Year'],
+            rate=fake.random_int(min=4000, max=8000, step=350),
+            type=fake_vehicle['Category'].split(',')[0])
+
+            vendor_name = fake_vehicle['Make']
+
+            if(not vendor_name in vendor_cache):
+                vendor_cache[vendor_name] = Vendors(name=vendor_name)
+
+            vendor = vendor_cache[vendor_name]
+            
+            vehicle1.vendor = vendor
+            db.session.add(vehicle1)
         db.session.commit()
-
-        rental1 = Rentals(
-            # driver_id
-            # user_id
-            days = 7,
-            driver_rate = 2000,
-            vehicle_rate = 4000,
-            status = 'BOOKED',
-            dispatched = datetime.now(),
-            returned = None,
-            vehicle = vehicle1,
-            driver = driver,
-            user = user,
-        )
-        db.session.add(rental1)
-        db.session.commit()
-        
     except Exception:
         import traceback
         traceback.print_exc(file=sys.stdout)

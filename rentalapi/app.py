@@ -49,8 +49,9 @@ def create_app():
             return response
 
     if app.config['ENV'] == 'development':
-        from .dummy_data import insert_dummy_data
+        from .seed_data import insert_dummy_data, seed_data
         app.cli.add_command(insert_dummy_data)
+        app.cli.add_command(seed_data)
 
     try:
         os.makedirs(app.instance_path, exist_ok=True)
