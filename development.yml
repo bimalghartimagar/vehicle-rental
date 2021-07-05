@@ -1,46 +1,52 @@
 version: '3.6'
 
 services:
-  rentalapi:
+  api:
     build: ./rentalapi
     depends_on:
-      - rentalpgdb
-      - rentalredis
+      - db
+      - cache
     links:
-      - rentalpgdb
+      - db
     ports:
       - '8098:8000'
     volumes:
       - ./rentalapi:/rentalapi
     env_file: conf/dev.env
-    command: ['flask', 'run', '--host=0.0.0.0', '--port=8000']
+    command: [ 'sh', '/tmp/wait-for.sh', 'db:5432', '-t', '30', '--', 'flask', 'run', '--host=0.0.0.0', '--port=8000']
 
-  rentalpgdb:
+  db:
     image: postgres:alpine
+    container_name: rentaldb
     env_file: conf/dev.env
-    # ports:
-    #   - '5433:5432'
     volumes:
-      - rentaldb_volume:/var/lib/postgresql
+      - db_volume:/var/lib/postgresql
 
-  rentalredis:
+  cache:
     image: redis:alpine
-    ports:
-      - '6379:6379'
+    container_name: rentalredis
     volumes:
-      - rentalredis_volume:/data
+      - cache_volume:/data
       - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
 
-  rentalapp:
+  frontend:
     build: ./rentalapp
     depends_on:
-      - rentalapi
+      - api
     ports:
       - '8097:8080'
     volumes:
       - ./rentalapp:/rentalapp
     command: ['yarn', 'serve']
 
+  pgadmin:
+    image: dpage/pgadmin4:5.4
+    env_file: conf/dev.env
+    links:
+      - db
+    ports:
+      - '8100:80'
+
 volumes:
-  rentaldb_volume:
-  rentalredis_volume:
+  db_volume:
+  cache_volume:

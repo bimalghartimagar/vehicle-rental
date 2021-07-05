@@ -5,18 +5,21 @@ FROM python:alpine
 # gcc: fatal error: cannot execute 'cc1plus': execvp: No such file or directory
 # compilation terminated.
 # error: command '/usr/bin/gcc' failed with exit code 1
-RUN apk update && apk add build-base && apk add postgresql-dev gcc python3-dev musl-dev libffi-dev make
+RUN apk update && apk add build-base && apk add postgresql-dev gcc python3-dev musl-dev libffi-dev make curl
 
 RUN mkdir /rentalapi/ 
-
 WORKDIR /rentalapi/
 
+RUN curl https://raw.githubusercontent.com/eficode/wait-for/master/wait-for -o /tmp/wait-for.sh && chmod +x /tmp/wait-for.sh
+
 ADD requirements.txt .
-
 RUN pip install --upgrade pip
-
 RUN pip install -r requirements.txt
 
 COPY . .
+
+# For seed dummy data, will be removed later
+ADD requirements.dev.txt .
+RUN pip install -r requirements.dev.txt
 
 WORKDIR /
