@@ -1,4 +1,4 @@
-FROM python:alpine
+FROM python:alpine as base
 
 # build base to fix 
 # https://stackoverflow.com/questions/11912878/gcc-error-gcc-error-trying-to-exec-cc1-execvp-no-such-file-or-directory
@@ -18,10 +18,10 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-# For seed dummy data, will be removed later
-ADD requirements.dev.txt .
-RUN pip install -r requirements.dev.txt
-
 WORKDIR /
 
 EXPOSE 8000
+
+FROM base as development
+ADD requirements.dev.txt .
+RUN pip install -r requirements.dev.txt
