@@ -1,4 +1,4 @@
-FROM node:14.6.0-alpine3.12
+FROM node:14.6.0-alpine3.12 as base
 
 RUN mkdir /rentalapp/
 
@@ -9,3 +9,15 @@ ADD package.json yarn.lock *.js /rentalapp/
 RUN yarn
 
 COPY . .
+
+FROM base as builder
+
+RUN yarn build
+
+FROM nginx:1.21.0-alpine as production
+
+COPY --from=builder /rentalapp/dist /usr/share/nginx/html
+
+FROM base as development
+
+CMD ["yarn", "serve"]

@@ -23,3 +23,5 @@ ADD requirements.dev.txt .
 RUN pip install -r requirements.dev.txt
 
 WORKDIR /
+
+EXPOSE 8000
