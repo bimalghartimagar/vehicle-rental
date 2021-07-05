@@ -54,8 +54,8 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "rentals" */ "@/components/dashboard/Rentals.vue"
-          )
-        // beforeEnter: ifAuthenticated
+          ),
+        beforeEnter: ifAuthenticated
       },
       {
         path: "vehicles",
@@ -63,8 +63,8 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "vehicles" */ "@/components/dashboard/Vehicles.vue"
-          )
-        // beforeEnter: ifAuthenticated
+          ),
+        beforeEnter: ifAuthenticated
       },
       {
         path: "vendors",
@@ -72,8 +72,8 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "vendors" */ "@/components/dashboard/Vendors.vue"
-          )
-        // beforeEnter: ifAuthenticated
+          ),
+        beforeEnter: ifAuthenticated
       },
       {
         path: "usertypes",
@@ -81,8 +81,8 @@ const routes = [
         component: () =>
           import(
             /* webpackChunkName: "usertypes" */ "@/components/dashboard/UserTypes.vue"
-          )
-        // beforeEnter: ifAuthenticated
+          ),
+        beforeEnter: ifAuthenticated
       }
     ]
   }

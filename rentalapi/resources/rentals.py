@@ -10,8 +10,7 @@ rentals_schema = RentalSchema(many=True)
 
 
 class RentalsAPI(Resource):
-    # @role_required
-    @jwt_required()
+    @role_required
     def get(self):
         rentals = Rentals.query.all()
 

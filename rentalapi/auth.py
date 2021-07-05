@@ -17,6 +17,20 @@ blocklist = set()
 
 token_expiry_minutes = 120
 
+@jwt.user_identity_loader
+def user_identity_lookup(user):
+  return user.username+':'+str(user.id)
+
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_header, jwt_data):
+  identity = jwt_data['sub']
+  user = identity.split(':')
+  return Users.query.filter_by(username=user[0], id=user[1]).one_or_none()
+
+@jwt.user_lookup_error_loader
+def custom_user_lookup_error_loader(_jwt_header, jwt_data):
+    return jsonify({"msg": "User not authorized"}), 401
+
 @jwt.token_in_blocklist_loader
 def is_token_blocklist(jwt_header, jwt_data):
   jti = jwt_data['jti']
@@ -42,8 +56,8 @@ def login():
 
   expires = datetime.timedelta(minutes=token_expiry_minutes)
 
-  access_token = create_access_token(identity=username, expires_delta=expires, fresh=True)
-  refresh_token = create_refresh_token(identity=username)
+  access_token = create_access_token(identity=user, expires_delta=expires, fresh=True)
+  refresh_token = create_refresh_token(identity=user)
   return jsonify(access_token=access_token, refresh_token=refresh_token), 200
 
 @auth_bp.route('/signup/', methods=['POST'])

@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import rentalApi from "@/api/rentalApi";
 import localstorage from "../utils/localstorage.js";
+import router from "../router"
 const localStorageService = localstorage.getService();
 
 Vue.use(Vuex);
@@ -58,6 +59,11 @@ export default new Vuex.Store({
           }
           return Promise.reject(error);
         });
+    },
+    unauth: ({ commit }) => {
+      localStorageService.clearToken();
+      commit("logout_success");
+      router.push('/')
     }
   },
   modules: {},

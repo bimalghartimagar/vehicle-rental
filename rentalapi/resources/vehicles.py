@@ -1,6 +1,7 @@
 from flask_restful import Resource, abort
 from flask import current_app, request
 from marshmallow import ValidationError
+from flask_jwt_extended import (jwt_required)
 
 from rentalapi.dao.models import Vehicles, Vendors
 from rentalapi.schema import VehicleSchema
@@ -11,6 +12,7 @@ vehicles_schema = VehicleSchema(many=True)
 
 
 class VehiclesAPI(Resource):
+    @jwt_required()
     def get(self):
         vehicles = Vehicles.query.all()
 

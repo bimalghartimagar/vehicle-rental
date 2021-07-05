@@ -8,9 +8,9 @@ def role_required(fn):
   def wrapper(*args, **kwargs):
     verify_jwt_in_request()
 
-    username = get_jwt_identity()
-
-    current_user = Users.query.filter_by(username=username).first()
+    identity = get_jwt_identity()
+    user = identity.split(':')
+    current_user = Users.query.filter_by(username=user[0], id=user[1]).first()
     if not current_user:
       return {'msg': 'Invalid Request'}, 400
 
