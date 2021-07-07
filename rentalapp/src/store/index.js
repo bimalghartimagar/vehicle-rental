@@ -66,10 +66,14 @@ export default new Vuex.Store({
       commit("logout_success");
       router.push("/");
     },
-    fetchResults: ({ state }) => {
-      rentalApi.get("search/vehicles").then(response => {
-        state.searchResults = [...response.data];
-      });
+    fetchResults: ({ state }, { pickup, dropoff, pickupDate, dropoffDate }) => {
+      rentalApi
+        .get("search/vehicles", {
+          params: { pickup, dropoff, pickupDate, dropoffDate }
+        })
+        .then(response => {
+          state.searchResults = [...response.data];
+        });
     }
   },
   modules: {},

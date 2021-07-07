@@ -3,7 +3,7 @@
     <NavBar />
     <main class="my-12">
       <v-container fluid class="my-4">
-        <SearchComponent :data="searchResults" />
+        <SearchComponent :data="searchResults" :query-params="$route.query" />
       </v-container>
     </main>
   </div>
@@ -21,7 +21,7 @@ export default {
   },
 
   beforeMount() {
-    this.$store.dispatch("fetchResults");
+    this.$store.dispatch("fetchResults", this.$route.query);
   },
 
   computed: {
