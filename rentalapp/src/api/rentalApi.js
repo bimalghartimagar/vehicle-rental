@@ -51,13 +51,11 @@ function createResponseInterceptor() {
             console.log(error);
           })
           .finally(createResponseInterceptor());
-      }
-      else if (
+      } else if (
         error.response.status === 401 &&
         (error.response.data.msg === "User not authorized" ||
-        error.response.data.msg === "Missing Authorization Header")
-      )
-      {
+          error.response.data.msg === "Missing Authorization Header")
+      ) {
         store.dispatch("unauth");
       }
       return Promise.reject(error);

@@ -20,17 +20,17 @@ import NotAuthorized from "@/components/shared/NotAuthorized";
 export default {
   components: {
     Datatable,
-    NotAuthorized,
+    NotAuthorized
   },
 
   created() {
     rentalApi
       .get("rentals/")
-      .then((response) => {
+      .then(response => {
         this.currentComponent = "Datatable";
         this.items = response.data;
       })
-      .catch((error) => {
+      .catch(error => {
         if (
           error.response.status === 403 &&
           error.response.data.msg === "Not Authorized"
@@ -43,28 +43,28 @@ export default {
 
     rentalApi
       .get("users/")
-      .then((response) => (this.users = response.data))
+      .then(response => (this.users = response.data))
       .then(() =>
-        rentalApi.get("vehicles/").then((response) => {
+        rentalApi.get("vehicles/").then(response => {
           this.vehicles = response.data;
           this.headers = [
             {
               id: "ID",
               align: "start",
               sortable: false,
-              value: "id",
+              value: "id"
             },
             {
               text: "User",
               value: "user_id",
               list: this.users,
-              label: "username",
+              label: "username"
             },
             {
               text: "Driver",
               value: "driver_id",
               list: this.users,
-              label: "username",
+              label: "username"
             },
             { text: "Vehicle Rate", value: "vehicle_rate" },
             { text: "Driver Rate", value: "driver_rate" },
@@ -75,11 +75,11 @@ export default {
               text: "Vehicle",
               value: "vehicle_id",
               list: this.vehicles,
-              label: "name",
+              label: "name"
             },
             { text: "Created", value: "created" },
             { text: "Updated", value: "updated" },
-            { text: "Actions", value: "actions", sortable: false },
+            { text: "Actions", value: "actions", sortable: false }
           ];
         })
       );
@@ -103,9 +103,9 @@ export default {
       status: "",
       dispatched: "",
       returned: "",
-      vehicle_id: "",
-    },
-  }),
+      vehicle_id: ""
+    }
+  })
 };
 </script>
 

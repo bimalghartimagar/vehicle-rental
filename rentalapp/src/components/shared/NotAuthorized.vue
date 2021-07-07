@@ -1,11 +1,11 @@
 <template>
   <div class="forbidden">
-    <h1>{{msg}}</h1>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['msg']
-}
+  props: ["msg"]
+};
 </script>
