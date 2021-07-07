@@ -86,6 +86,43 @@ def seed_data():
             vehicle1.vendor = vendor
             db.session.add(vehicle1)
         db.session.commit()
+        
+        usertype = UserTypes.query.filter_by(name='USER').first()
+        for i in range(10):
+            username = fake.user_name()
+            user = Users(
+                first_name=fake.first_name(),
+                last_name=fake.last_name(),
+                username=username,
+                email=fake.email(),
+                password=username,
+                rate=0)
+            user.hash_password()
+            user.usertype = usertype
+            db.session.add(user)
+            db.session.commit()
+            location = fake.location_on_land()
+            location = location[2]+', '+location[3]
+            pickup_date=fake.date_between_dates(datetime(2021, 7, 23),datetime(2021, 7, 30))
+            dropoff_date=fake.date_between_dates(datetime(2021, 8, 1),datetime(2021, 8, 7))
+            days = dropoff_date-pickup_date
+            days = days.days
+            rental = Rentals(
+                user_id=user.id,
+                vehicle_id=fake.random_int(min=1, max=100),
+                user_age=fake.random_int(min=22, max=35),
+                pickup=location,
+                pickup_date=pickup_date,
+                dropoff_date=dropoff_date,
+                days=days,
+                driver_rate=0,
+                vehicle_rate=fake.random_int(min=4000, max=8000, step=350),
+                status='BOOKED',
+                total = days * fake.random_int(min=4000, max=8000, step=350),
+                discount = fake.random_int(min=100, max=500, step=50),
+            )
+            db.session.add(rental)
+            db.session.commit()
     except Exception:
         import traceback
         traceback.print_exc(file=sys.stdout)
