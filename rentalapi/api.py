@@ -7,8 +7,10 @@ from rentalapi.resources.users import UsersAPI, UserAPI
 from rentalapi.resources.vehicles import VehiclesAPI, VehicleAPI
 from rentalapi.resources.usertypes import UserTypesAPI, UserTypeAPI
 from rentalapi.resources.index import IndexAPI
-
+from rentalapi.resources.search import init_search
 api_bp = Blueprint('api', __name__, url_prefix='/api')
+
+init_search(api_bp)
 
 api = Api(api_bp)
 

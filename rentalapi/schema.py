@@ -76,3 +76,9 @@ class RentalSchema(ma.SQLAlchemyAutoSchema):
     user = ma.Nested(UserSchema)
     vehicle = ma.Nested(VehicleSchema)
 
+class SearchSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = Vehicles
+        fields = ('id','name','seats','color','make_year','rate','type', 'vendor', 'img_url')
+
+    vendor = ma.Pluck(VendorSchema, 'name')
