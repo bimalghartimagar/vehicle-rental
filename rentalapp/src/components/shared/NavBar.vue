@@ -1,13 +1,5 @@
 <template>
-  <v-app-bar
-    app
-    hide-on-scroll
-    dense
-    color="unset"
-    flat
-    light
-    class="nav-header"
-  >
+  <v-app-bar app :color="color" dense>
     <div class="d-flex align-center display-1">Vehicle Rental</div>
 
     <v-spacer></v-spacer>
@@ -69,6 +61,14 @@
 import { mapGetters } from "vuex";
 
 export default {
+  props: {
+    color: {
+      type: String,
+      required: false,
+      default: "#88aaaf"
+    }
+  },
+
   data() {
     return {
       options: {

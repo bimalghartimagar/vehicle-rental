@@ -87,7 +87,7 @@
           </v-card-text> -->
 
           <v-card-actions>
-            <v-btn color="green" block @click="reserve">Search</v-btn>
+            <v-btn color="green" block to="/search">Search</v-btn>
           </v-card-actions>
         </v-card>
       </div>

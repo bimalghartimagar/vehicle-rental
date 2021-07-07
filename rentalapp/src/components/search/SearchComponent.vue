@@ -1,0 +1,26 @@
+<template>
+  <div class="d-flex flex-wrap justify-space-around w-4">
+    <SearchItem
+      v-for="item in data"
+      :key="item.id"
+      :item="item"
+      class="align-content-space-around mb-8"
+    />
+  </div>
+</template>
+
+<script>
+import SearchItem from "@/components/search/SearchItem";
+export default {
+  components: {
+    SearchItem
+  },
+
+  props: {
+    data: {
+      type: Array,
+      required: true
+    }
+  }
+};
+</script>

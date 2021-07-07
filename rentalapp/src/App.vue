@@ -17,7 +17,4 @@
   padding-top: 90px;
   padding-bottom: 80px;
 }
-.nav-header {
-  background: unset !important;
-}
 </style>

@@ -85,6 +85,12 @@ const routes = [
         beforeEnter: ifAuthenticated
       }
     ]
+  },
+  {
+    path: "/search",
+    name: "Search",
+    component: () =>
+      import(/* webpackChunkName: "search" */ "../views/Search.vue")
   }
 ];
 

@@ -2,7 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import rentalApi from "@/api/rentalApi";
 import localstorage from "../utils/localstorage.js";
-import router from "../router"
+import router from "../router";
 const localStorageService = localstorage.getService();
 
 Vue.use(Vuex);
@@ -10,7 +10,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     access_token: localStorageService.getAccessToken() || "",
-    refresh_token: localStorageService.getRefreshToken() || ""
+    refresh_token: localStorageService.getRefreshToken() || "",
+    searchResults: []
   },
   mutations: {
     login_success: (state, obj) => {
@@ -63,12 +64,18 @@ export default new Vuex.Store({
     unauth: ({ commit }) => {
       localStorageService.clearToken();
       commit("logout_success");
-      router.push('/')
+      router.push("/");
+    },
+    fetchResults: ({ state }) => {
+      rentalApi.get("search/vehicles").then(response => {
+        state.searchResults = [...response.data];
+      });
     }
   },
   modules: {},
   getters: {
     isAuthenticated: state => !!state.access_token && !!state.refresh_token,
-    getRefreshToken: state => state.refresh_token
+    getRefreshToken: state => state.refresh_token,
+    searchResults: state => state.searchResults
   }
 });
