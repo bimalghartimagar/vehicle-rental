@@ -54,20 +54,38 @@ class Rentals(db.Model, TimeStampMixin):
     driver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
-
+    user_age = db.Column(db.Integer, nullable=False)
+    pickup = db.Column(db.String(150), nullable=False)
+    dropoff = db.Column(db.String(150), nullable=True)
+    pickup_date = db.Column(db.DateTime, nullable=False)
+    dropoff_date = db.Column(db.DateTime, nullable=False)
     days = db.Column(db.Integer, nullable=False)
     driver_rate = db.Column(db.Float, nullable=False)
     vehicle_rate = db.Column(db.Float, nullable=False)
     status = db.Column(db.String(20), nullable=False)
-    dispatched = db.Column(db.DateTime)
-    returned = db.Column(db.DateTime)
+    dispatch_date = db.Column(db.DateTime)
+    return_date = db.Column(db.DateTime)
+    total = db.Column(db.Float, nullable=False)
+    discount = db.Column(db.Float, nullable=True)
 
-    vehicle = db.relationship('Vehicles', foreign_keys='rentals.c.vehicle_id', backref="vehicle", lazy=True)
-
-    driver = db.relationship('Users', foreign_keys='rentals.c.driver_id',
-                              backref='driver', lazy=True)
-    user = db.relationship('Users', foreign_keys='rentals.c.user_id',
-                            backref='user', lazy=True)
+    vehicle = db.relationship(
+        'Vehicles', 
+        foreign_keys='rentals.c.vehicle_id',
+        backref="vehicle",
+        lazy=True
+    )
+    driver = db.relationship(
+        'Users', 
+        foreign_keys='rentals.c.driver_id',
+        backref='driver',
+        lazy=True
+    )
+    user = db.relationship(
+        'Users', 
+        foreign_keys='rentals.c.user_id',
+        backref='user',
+        lazy=True
+    )
 
     def __repr__(self):
         return '<Rental %r>' % self.id
