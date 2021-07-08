@@ -86,12 +86,12 @@ export default {
       pickupMenu: false,
       dropoffMenu: false,
       pickup: "",
-      pickupRules: [v => !!v || "Pick-up Location is required"],
+      pickupRules: [(v) => !!v || "Pick-up Location is required"],
       dropoff: "",
       dropoffDate: null,
-      dropoffDateRules: [v => !!v || "Drop-off Date is required"],
+      dropoffDateRules: [(v) => !!v || "Drop-off Date is required"],
       pickupDate: null,
-      pickupDateRules: [v => !!v || "Pick-up Date is required"]
+      pickupDateRules: [(v) => !!v || "Pick-up Date is required"],
     };
   },
 
@@ -105,11 +105,11 @@ export default {
             pickup: this.pickup,
             dropoff: this.dropoff,
             pickupDate: this.pickupDate,
-            dropoffDate: this.dropoffDate
-          }
+            dropoffDate: this.dropoffDate,
+          },
         });
       }
-    }
-  }
+    },
+  },
 };
 </script>

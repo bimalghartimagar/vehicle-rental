@@ -49,26 +49,26 @@ export default {
     return {
       username: "",
       password: "",
-      errorMsg: ""
+      errorMsg: "",
     };
   },
 
   methods: {
-    login: function() {
+    login: function () {
       this.$store
         .dispatch("login", {
           username: this.username,
-          password: this.password
+          password: this.password,
         })
         .then(() => {
           this.$router.push("/");
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status === 401) {
             this.errorMsg = error.response.data.msg;
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>

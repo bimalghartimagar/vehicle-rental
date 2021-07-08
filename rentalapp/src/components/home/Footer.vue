@@ -10,7 +10,12 @@
               Vokalia and Consonantia, there live the blind texts.
             </p>
             <ul
-              class="ftco-footer-social list-unstyled float-md-left float-lft mt-5"
+              class="
+                ftco-footer-social
+                list-unstyled
+                float-md-left float-lft
+                mt-5
+              "
             >
               <li class="ftco-animate fadeInUp ftco-animated">
                 <a href="#">

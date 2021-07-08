@@ -5,7 +5,7 @@ import store from "../store/index.js";
 const localStorageService = localstorageservice.getService();
 
 axios.interceptors.request.use(
-  config => {
+  (config) => {
     let token = localStorageService.getAccessToken();
 
     if (
@@ -21,17 +21,17 @@ axios.interceptors.request.use(
     config.headers["Content-Type"] = "application/json";
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
 function createResponseInterceptor() {
   const responseInterceptor = axios.interceptors.response.use(
-    response => {
+    (response) => {
       return response;
     },
-    error => {
+    (error) => {
       const originalRequest = error.config;
       if (
         error.response.status === 401 &&
@@ -40,14 +40,14 @@ function createResponseInterceptor() {
         axios.interceptors.response.eject(responseInterceptor);
         return axios
           .post("auth/refresh/")
-          .then(response => {
+          .then((response) => {
             if (response.status === 200) {
               localStorageService.refreshToken(response.data);
               store.dispatch("refresh_token", response.data);
               return axios(originalRequest);
             }
           })
-          .catch(error => {
+          .catch((error) => {
             console.log(error);
           })
           .finally(createResponseInterceptor());

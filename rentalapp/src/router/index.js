@@ -25,21 +25,21 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
   },
   {
     path: "/login",
     name: "Login",
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Login.vue"),
-    beforeEnter: ifNotAuthenticated
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: "/signup",
     name: "Signup",
     component: () =>
       import(/* webpackChunkName: "login" */ "../views/Signup.vue"),
-    beforeEnter: ifNotAuthenticated
+    beforeEnter: ifNotAuthenticated,
   },
   {
     path: "/dashboard",
@@ -55,7 +55,7 @@ const routes = [
           import(
             /* webpackChunkName: "rentals" */ "@/components/dashboard/Rentals.vue"
           ),
-        beforeEnter: ifAuthenticated
+        beforeEnter: ifAuthenticated,
       },
       {
         path: "vehicles",
@@ -64,7 +64,7 @@ const routes = [
           import(
             /* webpackChunkName: "vehicles" */ "@/components/dashboard/Vehicles.vue"
           ),
-        beforeEnter: ifAuthenticated
+        beforeEnter: ifAuthenticated,
       },
       {
         path: "vendors",
@@ -73,7 +73,7 @@ const routes = [
           import(
             /* webpackChunkName: "vendors" */ "@/components/dashboard/Vendors.vue"
           ),
-        beforeEnter: ifAuthenticated
+        beforeEnter: ifAuthenticated,
       },
       {
         path: "usertypes",
@@ -82,22 +82,22 @@ const routes = [
           import(
             /* webpackChunkName: "usertypes" */ "@/components/dashboard/UserTypes.vue"
           ),
-        beforeEnter: ifAuthenticated
-      }
-    ]
+        beforeEnter: ifAuthenticated,
+      },
+    ],
   },
   {
     path: "/search",
     name: "Search",
     component: () =>
-      import(/* webpackChunkName: "search" */ "../views/Search.vue")
-  }
+      import(/* webpackChunkName: "search" */ "../views/Search.vue"),
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

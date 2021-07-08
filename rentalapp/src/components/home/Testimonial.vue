@@ -1,6 +1,6 @@
 <template>
   <div class="testimonials-container" id="testimonials">
-    <v-container class="mx-auto" style="width: 75%;">
+    <v-container class="mx-auto" style="width: 75%">
       <div class="row justify-content-center">
         <div class="col-md-12 text-center heading-section">
           <span class="subheading">Testimonial</span>
@@ -21,9 +21,7 @@
                   </div>
                   <v-avatar class="ma-2 ml-1" size="125" tile>
                     <v-img
-                      :src="
-                        'https://api.adorable.io/avatars/126/abott@adorable.png'
-                      "
+                      :src="'https://api.adorable.io/avatars/126/abott@adorable.png'"
                     ></v-img>
                   </v-avatar>
                 </div>
@@ -46,14 +44,14 @@ export default {
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "UI Designer",
-          id: 1
+          id: 1,
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "Web Developer",
-          id: 11
+          id: 11,
         },
 
         {
@@ -61,7 +59,7 @@ export default {
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "System Analyst",
-          id: 111
+          id: 111,
         },
 
         {
@@ -69,7 +67,7 @@ export default {
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "Marketing Manager",
-          id: 1111
+          id: 1111,
         },
 
         {
@@ -77,7 +75,7 @@ export default {
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "Interface Designer",
-          id: 11111
+          id: 11111,
         },
 
         {
@@ -85,7 +83,7 @@ export default {
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "UI Designer",
-          id: 12
+          id: 12,
         },
 
         {
@@ -93,38 +91,38 @@ export default {
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "Web Developer",
-          id: 13
+          id: 13,
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "System Analyst",
-          id: 14
+          id: 14,
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "Marketing Manager",
-          id: 15
+          id: 15,
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "Interface Designer",
-          id: 16
+          id: 16,
         },
         {
           testimony:
             "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.",
           name: "Roger Scott",
           position: "UI Designer",
-          id: 17
-        }
-      ]
+          id: 17,
+        },
+      ],
     };
-  }
+  },
 };
 </script>

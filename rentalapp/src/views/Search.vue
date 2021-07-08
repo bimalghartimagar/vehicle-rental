@@ -17,7 +17,7 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     SearchComponent,
-    NavBar
+    NavBar,
   },
 
   beforeMount() {
@@ -25,7 +25,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["searchResults"])
-  }
+    ...mapGetters(["searchResults"]),
+  },
 };
 </script>

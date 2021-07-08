@@ -1,4 +1,4 @@
-const localstorage = (function() {
+const localstorage = (function () {
   var _service;
 
   function _getService() {
@@ -36,7 +36,7 @@ const localstorage = (function() {
     refreshToken: _refreshToken,
     getAccessToken: _getAccessToken,
     getRefreshToken: _getRefreshToken,
-    clearToken: _clearToken
+    clearToken: _clearToken,
   };
 })();
 

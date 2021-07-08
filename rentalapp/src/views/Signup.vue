@@ -70,12 +70,12 @@ export default {
       password: "",
       password2: "",
       errorMsg: "",
-      email: ""
+      email: "",
     };
   },
 
   methods: {
-    signup: function() {
+    signup: function () {
       if (this.email.trim().length === 0) {
         this.errorMsg = "Email cannot be empty.";
         return;
@@ -98,25 +98,26 @@ export default {
           email: this.email,
           username: this.username,
           password: this.password,
-          type_id: 1
+          type_id: 1,
         })
-        .then(response => {
+        .then((response) => {
           this.username = "";
           this.email = "";
           this.password = "";
           this.password2 = "";
           this.errorMsg = response.data.msg;
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status === 401) {
             this.errorMsg = error.response.data.msg;
           }
         });
     },
-    validEmail: function(email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
-    }
-  }
+    },
+  },
 };
 </script>

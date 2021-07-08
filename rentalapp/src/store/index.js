@@ -11,34 +11,34 @@ export default new Vuex.Store({
   state: {
     access_token: localStorageService.getAccessToken() || "",
     refresh_token: localStorageService.getRefreshToken() || "",
-    searchResults: []
+    searchResults: [],
   },
   mutations: {
     login_success: (state, obj) => {
       state.access_token = obj.access_token;
       state.refresh_token = obj.refresh_token;
     },
-    logout_success: state => {
+    logout_success: (state) => {
       state.access_token = "";
       state.refresh_token = "";
     },
     refresh_token: (state, obj) => {
       state.access_token = obj.access_token;
-    }
+    },
   },
   actions: {
     login: ({ commit }, user) => {
       return rentalApi
         .post("auth/login/", {
           username: user.username,
-          password: user.password
+          password: user.password,
         })
-        .then(response => {
+        .then((response) => {
           localStorageService.setToken(response.data);
           commit("login_success", response.data);
           return Promise.resolve(user);
         })
-        .catch(error => {
+        .catch((error) => {
           return Promise.reject(error);
         });
     },
@@ -46,14 +46,14 @@ export default new Vuex.Store({
       return rentalApi
         .all([
           rentalApi.delete("auth/logout/"),
-          rentalApi.delete("auth/logout2/")
+          rentalApi.delete("auth/logout2/"),
         ])
         .then(() => {
           localStorageService.clearToken();
           commit("logout_success");
           return Promise.resolve();
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response.status === 401) {
             localStorageService.clearToken();
             commit("logout_success");
@@ -69,17 +69,17 @@ export default new Vuex.Store({
     fetchResults: ({ state }, { pickup, dropoff, pickupDate, dropoffDate }) => {
       rentalApi
         .get("search/vehicles", {
-          params: { pickup, dropoff, pickupDate, dropoffDate }
+          params: { pickup, dropoff, pickupDate, dropoffDate },
         })
-        .then(response => {
+        .then((response) => {
           state.searchResults = [...response.data];
         });
-    }
+    },
   },
   modules: {},
   getters: {
-    isAuthenticated: state => !!state.access_token && !!state.refresh_token,
-    getRefreshToken: state => state.refresh_token,
-    searchResults: state => state.searchResults
-  }
+    isAuthenticated: (state) => !!state.access_token && !!state.refresh_token,
+    getRefreshToken: (state) => state.refresh_token,
+    searchResults: (state) => state.searchResults,
+  },
 });

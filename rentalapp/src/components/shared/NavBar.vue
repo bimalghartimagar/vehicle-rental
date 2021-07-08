@@ -65,8 +65,8 @@ export default {
     color: {
       type: String,
       required: false,
-      default: "#88aaaf"
-    }
+      default: "#88aaaf",
+    },
   },
 
   data() {
@@ -76,19 +76,19 @@ export default {
         endDate: new Date().toISOString().substr(0, 10),
         duration: 500,
         offset: 0,
-        easing: "linear"
-      }
+        easing: "linear",
+      },
     };
   },
   computed: {
-    ...mapGetters(["isAuthenticated"])
+    ...mapGetters(["isAuthenticated"]),
   },
   methods: {
-    logout: function() {
+    logout: function () {
       this.$store.dispatch("logout").then(() => {
         this.$router.push("/login");
       });
-    }
-  }
+    },
+  },
 };
 </script>

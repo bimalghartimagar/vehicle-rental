@@ -37,7 +37,7 @@
 export default {
   name: "Splash",
 
-  data: () => ({})
+  data: () => ({}),
 };
 </script>
 

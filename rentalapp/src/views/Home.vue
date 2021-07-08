@@ -39,8 +39,8 @@ export default {
     HowItWorks,
     Testimonial,
     Footer,
-    NavBar
-  }
+    NavBar,
+  },
 };
 </script>
 

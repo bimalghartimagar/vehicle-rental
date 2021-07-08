@@ -2,12 +2,8 @@
   <v-navigation-drawer app permanent>
     <v-list-item>
       <v-list-item-content>
-        <v-list-item-title class="title">
-          Vehicle Rental
-        </v-list-item-title>
-        <v-list-item-subtitle>
-          Dashboard
-        </v-list-item-subtitle>
+        <v-list-item-title class="title"> Vehicle Rental </v-list-item-title>
+        <v-list-item-subtitle> Dashboard </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
 
@@ -40,10 +36,10 @@ export default {
         {
           title: "User Types",
           icon: "mdi-help-box",
-          url: "/dashboard/usertypes"
-        }
-      ]
+          url: "/dashboard/usertypes",
+        },
+      ],
     };
-  }
+  },
 };
 </script>

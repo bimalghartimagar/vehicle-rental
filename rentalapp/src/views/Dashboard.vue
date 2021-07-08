@@ -8,7 +8,7 @@
 <script>
 import Sidebar from "@/components/dashboard/Sidebar";
 export default {
-  components: { Sidebar }
+  components: { Sidebar },
 };
 </script>
 

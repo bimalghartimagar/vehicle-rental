@@ -3,7 +3,14 @@
     <v-container class="workflow mx-auto">
       <v-row>
         <div
-          class="col-md-12 text-center heading-section heading-section-white ftco-animate fadeInUp ftco-animated"
+          class="
+            col-md-12
+            text-center
+            heading-section heading-section-white
+            ftco-animate
+            fadeInUp
+            ftco-animated
+          "
         >
           <span class="subheading">Work flow</span>
           <h2 class="mb-3">How it works</h2>
@@ -11,7 +18,14 @@
       </v-row>
       <v-row>
         <div
-          class="col-md-3 d-flex align-self-stretch ftco-animate fadeInUp ftco-animated"
+          class="
+            col-md-3
+            d-flex
+            align-self-stretch
+            ftco-animate
+            fadeInUp
+            ftco-animated
+          "
         >
           <div class="media block-6 services services-2">
             <div class="media-body py-md-4 text-center">
@@ -29,7 +43,14 @@
           </div>
         </div>
         <div
-          class="col-md-3 d-flex align-self-stretch ftco-animate fadeInUp ftco-animated"
+          class="
+            col-md-3
+            d-flex
+            align-self-stretch
+            ftco-animate
+            fadeInUp
+            ftco-animated
+          "
         >
           <div class="media block-6 services services-2">
             <div class="media-body py-md-4 text-center">
@@ -47,7 +68,14 @@
           </div>
         </div>
         <div
-          class="col-md-3 d-flex align-self-stretch ftco-animate fadeInUp ftco-animated"
+          class="
+            col-md-3
+            d-flex
+            align-self-stretch
+            ftco-animate
+            fadeInUp
+            ftco-animated
+          "
         >
           <div class="media block-6 services services-2">
             <div class="media-body py-md-4 text-center">
@@ -65,7 +93,14 @@
           </div>
         </div>
         <div
-          class="col-md-3 d-flex align-self-stretch ftco-animate fadeInUp ftco-animated"
+          class="
+            col-md-3
+            d-flex
+            align-self-stretch
+            ftco-animate
+            fadeInUp
+            ftco-animated
+          "
         >
           <div class="media block-6 services services-2">
             <div class="media-body py-md-4 text-center">
