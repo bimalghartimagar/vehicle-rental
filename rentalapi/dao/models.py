@@ -102,11 +102,23 @@ class Users(db.Model, TimeStampMixin):
                         nullable=False)
     rate = db.Column(db.Float, nullable=True, server_default=str(0.0))
     img_url = db.Column(db.String, nullable=True)
+
+    def __init__(self, email, username, password, user_type=1) -> None:
+        """Create a new User object using the email, username,
+        type id and hashing plain text password using flak bcrypt
+        """
+        self.email = email
+        self.username = username
+        self.password = self.hash_password(password)
+        self.type_id = user_type
+
     def __repr__(self):
         return '<User %r>' % self.username
 
-    def hash_password(self):
-        self.password = generate_password_hash(self.password).decode('utf8')
+    def hash_password(self, password):
+        if password is None:
+            password = self.password
+        self.password = generate_password_hash(password).decode('utf8')
 
     def check_password(self, password):
         return check_password_hash(self.password, password)

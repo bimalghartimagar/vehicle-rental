@@ -2,12 +2,9 @@ import os
 import json
 
 from flask import Flask, request
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from celery import Celery
 
-from rentalapi.dao.models import db, migrate, Vendors, Vehicles, Users, UserTypes
-from rentalapi import config
+from rentalapi.dao.models import db, migrate
 
 from rentalapi.utils.jwtauth import jwt
 from rentalapi.schema import ma
@@ -15,29 +12,16 @@ from rentalapi.api import api_bp
 from rentalapi.celery_util import init_celery
 from rentalapi.auth import auth_bp
 
-from rentalapi import celery
+def create_app(config_filename=None):
+    app = Flask(__name__, instance_path=f'{os.getcwd()}{os.sep}instance', instance_relative_config=True)
 
-def create_app():
-    app = Flask(__name__, instance_relative_config=True)
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['JWT_SECRET_KEY'] = config.JWT_SECRET_KEY
+    app.config.from_pyfile(config_filename)
 
     app.app_context().push()
 
-    init_celery(celery, app)
+    init_extensions(app)
 
-    db.init_app(app)
-    migrate.init_app(app, db)
-    db.create_all()
-
-    ma.init_app(app)
-
-    jwt.init_app(app)
-
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(api_bp)
+    register_blueprints(app)
 
     cors = CORS(app)
 
@@ -75,5 +59,22 @@ def create_app():
     return app
 
 
+def init_extensions(app) -> None:
+    init_celery(app)
+
+    db.init_app(app)
+    migrate.init_app(app, db)
+    db.create_all()
+
+    ma.init_app(app)
+
+    jwt.init_app(app)
+
+
+def register_blueprints(app) -> None:
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(api_bp)
+
+
 if __name__ == '__main__':
-    create_app().run()
+    create_app('dev.cfg').run()

@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+  test_api:
+    build: 
+      context: ./rentalapi
+      target: testing
+    depends_on:
+      - test_db
+    links:
+      - test_db
+    volumes:
+      - ./rentalapi:/rentalapi
+    env_file: conf/test.env
+    command: [ 'pytest', '--cov=rentalapi']
+
+  test_db:
+    image: postgres:alpine
+    container_name: test_db
+    env_file: conf/test.env
+    volumes:
+      - test_db_volume:/var/lib/postgresql
+
+volumes:
+  test_db_volume:

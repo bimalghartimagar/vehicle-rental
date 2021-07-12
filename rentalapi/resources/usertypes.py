@@ -8,7 +8,6 @@ from flask_jwt_extended import (jwt_required)
 from rentalapi.schema import UserTypeSchema
 from rentalapi.dao.models import UserTypes as UserTypesModel
 from rentalapi.dao.models import db
-from rentalapi.celery_tasks import add
 user_type_schema = UserTypeSchema()
 user_types_schema = UserTypeSchema(many=True)
 

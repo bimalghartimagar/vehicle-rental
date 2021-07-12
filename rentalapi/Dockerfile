@@ -18,10 +18,11 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-WORKDIR /
-
 EXPOSE 8000
 
 FROM base as development
 ADD requirements.dev.txt .
 RUN pip install -r requirements.dev.txt
+
+FROM development as testing
+RUN pip install pytest pytest-cov
