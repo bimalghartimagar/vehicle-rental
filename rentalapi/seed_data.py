@@ -5,6 +5,7 @@ from flask.cli import with_appcontext
 from .dao.models import db, UserTypes, Vendors, Vehicles, Users, Rentals
 from datetime import datetime
 
+
 @click.command('dummy')
 @with_appcontext
 def insert_dummy_data():
@@ -54,13 +55,14 @@ def insert_dummy_data():
         traceback.print_exc(file=sys.stdout)
         db.session.rollback()
 
+
 @click.command('seed')
 @with_appcontext
 def seed_data():
     try:
         from faker import Faker
         from faker_vehicle import VehicleProvider
-        
+
         vendor_cache = {}
 
         fake = Faker()
@@ -69,12 +71,13 @@ def seed_data():
         for i in range(100):
             fake_vehicle = fake.vehicle_object()
             vehicle1 = Vehicles(
-            name=fake_vehicle['Model'],
-            seats=fake.random_choices(elements=(2,4,5,7,8), length=1),
-            color=fake.random_choices(elements=('Silver', 'Gray', 'White', 'Red', 'Blue', 'Sublime', 'Sublime', 'Glowing Yellow', 'Yellow', 'Stainless Steel', 'Purple', 'Pearl', 'Gold', 'Green', 'Orange', 'Copper'), length=1),
-            make_year=fake_vehicle['Year'],
-            rate=fake.random_int(min=4000, max=8000, step=350),
-            type=fake_vehicle['Category'].split(',')[0])
+                name=fake_vehicle['Model'],
+                seats=fake.random_choices(elements=(2, 4, 5, 7, 8), length=1),
+                color=fake.random_choices(elements=('Silver', 'Gray', 'White', 'Red', 'Blue', 'Sublime', 'Sublime', 'Glowing Yellow',
+                                          'Yellow', 'Stainless Steel', 'Purple', 'Pearl', 'Gold', 'Green', 'Orange', 'Copper'), length=1),
+                make_year=fake_vehicle['Year'],
+                rate=fake.random_int(min=4000, max=8000, step=350),
+                type=fake_vehicle['Category'].split(',')[0])
 
             vendor_name = fake_vehicle['Make']
 
@@ -82,11 +85,11 @@ def seed_data():
                 vendor_cache[vendor_name] = Vendors(name=vendor_name)
 
             vendor = vendor_cache[vendor_name]
-            
+
             vehicle1.vendor = vendor
             db.session.add(vehicle1)
         db.session.commit()
-        
+
         usertype = UserTypes.query.filter_by(name='USER').first()
         for i in range(10):
             username = fake.user_name()
@@ -103,8 +106,10 @@ def seed_data():
             db.session.commit()
             location = fake.location_on_land()
             location = location[2]+', '+location[3]
-            pickup_date=fake.date_between_dates(datetime(2021, 7, 23),datetime(2021, 7, 30))
-            dropoff_date=fake.date_between_dates(datetime(2021, 8, 1),datetime(2021, 8, 7))
+            pickup_date = fake.date_between_dates(
+                datetime(2021, 7, 23), datetime(2021, 7, 30))
+            dropoff_date = fake.date_between_dates(
+                datetime(2021, 8, 1), datetime(2021, 8, 7))
             days = dropoff_date-pickup_date
             days = days.days
             rental = Rentals(
@@ -118,8 +123,8 @@ def seed_data():
                 driver_rate=0,
                 vehicle_rate=fake.random_int(min=4000, max=8000, step=350),
                 status='BOOKED',
-                total = days * fake.random_int(min=4000, max=8000, step=350),
-                discount = fake.random_int(min=100, max=500, step=50),
+                total=days * fake.random_int(min=4000, max=8000, step=350),
+                discount=fake.random_int(min=100, max=500, step=50),
             )
             db.session.add(rental)
             db.session.commit()
@@ -128,9 +133,10 @@ def seed_data():
         traceback.print_exc(file=sys.stdout)
         db.session.rollback()
 
+
 def seed_prod_data():
     try:
-        adminT = UserTypes(name='Admin')
+        adminT = UserTypes(name='ADMIN')
 
         admin = Users(
             first_name='admin',

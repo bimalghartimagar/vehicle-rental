@@ -1,6 +1,3 @@
-from rentalapi.dao.models import Users
-
-
 def test_new_user(new_test_user):
     """
     GIVEN a User model
@@ -9,5 +6,5 @@ def test_new_user(new_test_user):
     """
     assert new_test_user.email == 'test@test.com'
     assert new_test_user.username == 'test_username'
-    assert new_test_user.password != 'test@test.com'
+    assert new_test_user.password != 'test_password'
     assert new_test_user.type_id == 1

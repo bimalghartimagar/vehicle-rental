@@ -44,6 +44,9 @@ class UserTypes(db.Model, TimeStampMixin):
     name = db.Column(db.String(20), unique=True, nullable=False)
     users = db.relationship('Users', backref='usertype', lazy=True)
 
+    def __init__(self, name='USER'):
+        self.name = name
+
     def __repr__(self):
         return '<User Type %r>' % self.name
 
@@ -53,7 +56,8 @@ class Rentals(db.Model, TimeStampMixin):
 
     driver_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    vehicle_id = db.Column(db.Integer, db.ForeignKey('vehicles.id'), nullable=False)
+    vehicle_id = db.Column(db.Integer, db.ForeignKey(
+        'vehicles.id'), nullable=False)
     user_age = db.Column(db.Integer, nullable=False)
     pickup = db.Column(db.String(150), nullable=False)
     dropoff = db.Column(db.String(150), nullable=True)
@@ -69,19 +73,19 @@ class Rentals(db.Model, TimeStampMixin):
     discount = db.Column(db.Float, nullable=True)
 
     vehicle = db.relationship(
-        'Vehicles', 
+        'Vehicles',
         foreign_keys='rentals.c.vehicle_id',
         backref="vehicle",
         lazy=True
     )
     driver = db.relationship(
-        'Users', 
+        'Users',
         foreign_keys='rentals.c.driver_id',
         backref='driver',
         lazy=True
     )
     user = db.relationship(
-        'Users', 
+        'Users',
         foreign_keys='rentals.c.user_id',
         backref='user',
         lazy=True
@@ -109,7 +113,7 @@ class Users(db.Model, TimeStampMixin):
         """
         self.email = email
         self.username = username
-        self.password = self.hash_password(password)
+        self.hash_password(password)
         self.type_id = user_type
 
     def __repr__(self):

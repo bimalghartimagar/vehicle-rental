@@ -20,9 +20,10 @@ COPY . .
 
 EXPOSE 8000
 
-FROM base as development
+FROM base as testing
+RUN pip install pytest pytest-cov
+
+FROM testing as development
 ADD requirements.dev.txt .
 RUN pip install -r requirements.dev.txt
 
-FROM development as testing
-RUN pip install pytest pytest-cov

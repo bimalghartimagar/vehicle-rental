@@ -9,8 +9,6 @@ services:
       - test_db
     links:
       - test_db
-    volumes:
-      - ./rentalapi:/rentalapi
     env_file: conf/test.env
     command: [ 'pytest', '--cov=rentalapi']
 
