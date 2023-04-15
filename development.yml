@@ -7,7 +7,6 @@ services:
       target: development
     depends_on:
       - db
-      - cache
     links:
       - db
     ports:
@@ -24,31 +23,34 @@ services:
     volumes:
       - db_volume:/var/lib/postgresql
 
-  cache:
-    image: redis:alpine
-    container_name: rentalredis
-    volumes:
-      - cache_volume:/data
-      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
-
   frontend:
-    build: ./rentalapp
+    build: 
+      context: ./rentalapp
+      target: development
     depends_on:
       - api
     ports:
       - '8097:8080'
     volumes:
       - ./rentalapp:/rentalapp
-    command: ['yarn', 'serve']
+      - node_modules:/rentalapp/node_modules
 
-  pgadmin:
-    image: dpage/pgadmin4:5.4
-    env_file: conf/dev.env
-    links:
-      - db
-    ports:
-      - '8100:80'
+  # cache:
+  #   image: redis:alpine
+  #   container_name: rentalredis
+  #   volumes:
+  #     - cache_volume:/data
+  #     - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+
+  # pgadmin:
+  #   image: dpage/pgadmin4:5.4
+  #   env_file: conf/dev.env
+  #   links:
+  #     - db
+  #   ports:
+  #     - '8100:80'
 
 volumes:
   db_volume:
   cache_volume:
+  node_modules:

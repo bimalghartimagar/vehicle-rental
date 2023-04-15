@@ -61,7 +61,7 @@
       >{{ getNameFromList(item, value.list, value.value, value.label) }}
     </template>
 
-    <template v-slot:item.actions="{ item }">
+    <template v-slot:[`item.actions`]="{ item }">
       <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
@@ -80,7 +80,7 @@ export default {
     dialog: false,
     editedIndex: -1,
     editedItem: {},
-    defaultItem: {}
+    defaultItem: {},
   }),
 
   created() {
@@ -92,15 +92,15 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? "New Item" : "Edit Item";
     },
-    headersWithList: function() {
-      return this.headers.filter(x => Object.hasOwnProperty.call(x, "list"));
-    }
+    headersWithList: function () {
+      return this.headers.filter((x) => Object.hasOwnProperty.call(x, "list"));
+    },
   },
 
   watch: {
     dialog(val) {
       val || this.close();
-    }
+    },
   },
 
   methods: {
@@ -121,12 +121,14 @@ export default {
       if (flag) {
         rentalApi
           .delete(this.putUrl + item.id + "/")
-          .then(response => {
+          .then((response) => {
             console.log(response);
-            let itemIndex = this.items.findIndex(x => x.id == response.data.id);
-            this.items.splice(itemIndex, 1);
+            let itemIndex = this.items.findIndex(
+              (x) => x.id == response.data.id
+            );
+            this.$emit("remove-item", itemIndex);
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       }
@@ -144,41 +146,43 @@ export default {
       if (this.editedIndex > -1) {
         rentalApi
           .put(this.putUrl + this.editedIndex + "/", this.editedItem)
-          .then(response => {
+          .then((response) => {
             console.log(response);
-            let itemIndex = this.items.findIndex(x => x.id == response.data.id);
-            this.items.splice(itemIndex, 1, response.data);
+            let itemIndex = this.items.findIndex(
+              (x) => x.id == response.data.id
+            );
+            this.$emit("udpate-item", itemIndex, response.data);
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       } else {
         rentalApi
           .post(this.postUrl, this.editedItem)
-          .then(response => {
+          .then((response) => {
             console.log(response);
-            this.items.push(response.data);
+            this.$emit("add-item", response.data);
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log(error);
           });
       }
       this.close();
     },
     getLabelName(name) {
-      let items = this.headers.filter(x => x.value === name);
+      let items = this.headers.filter((x) => x.value === name);
       if (items.length === 0) return;
       return items[0].text;
     },
     hasList(name) {
-      let items = this.headers.filter(x => x.value === name);
+      let items = this.headers.filter((x) => x.value === name);
       if (items.length === 0) return false;
       let item = items[0];
       if (Object.prototype.hasOwnProperty.call(item, "list")) return item.list;
       return false;
     },
     getNameFromList(item, list, attr, label) {
-      let items = list.filter(x => x.id === item[attr]);
+      let items = list.filter((x) => x.id === item[attr]);
       if (items.length == 0) return;
       return items[0][label];
     },
@@ -186,11 +190,11 @@ export default {
       return "item." + value;
     },
     getLabelForDropdown(name) {
-      let items = this.headers.filter(x => x.value === name);
+      let items = this.headers.filter((x) => x.value === name);
       if (items.length == 0) return "NO-VALUE";
       return items[0]["label"];
-    }
-  }
+    },
+  },
 };
 </script>
 

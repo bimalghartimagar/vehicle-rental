@@ -6,6 +6,9 @@
     :title="'Vehicles'"
     :post-url="'vehicles/'"
     :put-url="'vehicle/'"
+    @update-item="updateItem"
+    @add-item="addItem"
+    @remove-item="removeItem"
   ></Datatable>
 </template>
 
@@ -15,19 +18,19 @@ import Datatable from "@/components/dashboard/Datatable";
 
 export default {
   components: {
-    Datatable
+    Datatable,
   },
 
   created() {
-    rentalApi.get("vehicles/").then(response => (this.items = response.data));
-    rentalApi.get("vendors/").then(response => {
+    rentalApi.get("vehicles/").then((response) => (this.items = response.data));
+    rentalApi.get("vendors/").then((response) => {
       this.vendors = response.data;
       this.headers = [
         {
           id: "ID",
           align: "start",
           sortable: false,
-          value: "id"
+          value: "id",
         },
         { text: "Name", value: "name" },
         { text: "Seats", value: "seats" },
@@ -39,11 +42,11 @@ export default {
           text: "Vendor",
           value: "vendor_id",
           list: this.vendors,
-          label: "name"
+          label: "name",
         },
         { text: "Created", value: "created" },
         { text: "Updated", value: "updated" },
-        { text: "Actions", value: "actions", sortable: false }
+        { text: "Actions", value: "actions", sortable: false },
       ];
     });
   },
@@ -61,9 +64,23 @@ export default {
       make_year: "",
       rate: "",
       type: "",
-      vendor_id: ""
-    }
-  })
+      vendor_id: "",
+    },
+  }),
+
+  methods: {
+    updateItem: function (itemIndex, data) {
+      this.items.splice(itemIndex, 1, data);
+    },
+
+    addItem: function (data) {
+      this.items.push(data);
+    },
+
+    removeItem: function (itemIndex) {
+      this.items.splice(itemIndex, 1);
+    },
+  },
 };
 </script>
 
